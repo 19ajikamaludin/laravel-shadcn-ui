@@ -1,0 +1,71 @@
+import React from 'react'
+import { Head, useForm } from '@inertiajs/react'
+
+import AppLayout from '@/layouts/app-layout'
+import { Card, CardContent } from '@/components/ui/card'
+import { Button, TextInput } from '@/components/index'
+
+const breadcrumbs = [
+    {
+        title: '{{ Model }}',
+        href: route('{{ models }}.index'),
+    },
+]
+
+export default function Page(props) {
+    const { {{ model }} } = props
+
+    const { data, setData, post, processing, errors } = useForm({
+        name: {{ model }}?.name,
+    })
+
+    const handleOnChange = (event) => {
+        setData(
+            event.target.name,
+            event.target.type === 'checkbox'
+                ? event.target.checked
+                    ? 1
+                    : 0
+                : event.target.value
+        )
+    }
+
+    const handleSubmit = () => {
+        post(route('{{ models }}.update'))
+    }
+
+    return (
+        <AppLayout breadcrumbs={breadcrumbs}>
+            <Head title="{{ Model }}" />
+
+            <div>
+                <Card>
+                    <CardContent>
+                    <div className="text-xl font-bold mb-4 text-base-content">
+                        {{ Model }}
+                    </div>
+
+                    <div className="space-y-6">
+                    <TextInput
+                        name="name"
+                        value={data.name}
+                        onChange={handleOnChange}
+                        label="Name"
+                        error={errors.name}
+                    />
+                    </div>
+                    
+                    <div className="mt-4">
+                        <Button
+                            onClick={handleSubmit}
+                            loading={processing}
+                        >
+                            Save
+                        </Button>
+                    </div>
+                    </CardContent>
+                </Card>
+            </div>
+        </AppLayout>
+    )
+}

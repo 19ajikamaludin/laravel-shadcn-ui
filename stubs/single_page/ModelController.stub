@@ -1,0 +1,34 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\{{ Model }};
+use App\Attributes\Permission;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+
+class {{ Model }}Controller extends Controller
+{
+    #[Permission('view-{{ modelSplitPascalCase }}')]
+    public function index()
+    {
+        return inertia('{{ modelSplitPascalCase }}/index', [
+            '{{ model }}' => {{ Model }}::first(),
+        ]);
+    }
+
+    public function update(Request $request)
+    {
+        $request->validate([
+            'name' => 'required|string',
+        ]);
+
+        {{ Model }}::updateOrCreate(
+            ['name' => $request->name],
+            ['name' => $request->name],
+        );
+
+        return redirect()->route('{{ models }}.index')
+            ->with('message', ['type' => 'success', 'message' => 'Item has beed updated']);
+    }
+}

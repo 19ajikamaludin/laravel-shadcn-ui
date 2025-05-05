@@ -1,0 +1,12 @@
+<?php
+
+namespace {{ namespace }};
+
+use App\Models\Default\Model;
+
+class {{ class }} extends Model
+{
+    protected $fillable = [
+        'name',
+    ];
+}

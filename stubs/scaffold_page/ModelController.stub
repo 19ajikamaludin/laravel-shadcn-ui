@@ -1,0 +1,86 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\{{ Model }};
+use App\Attributes\Permission;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
+use Inertia\Response;
+
+class {{ Model }}Controller extends Controller
+{
+    #[Permission('view-{{ modelSplitPascalCase }}')]
+    public function index(Request $request): Response
+    {
+        $query = {{ Model }}::query();
+
+        if ($request->q) {
+            // multi columns search 
+            $query->where(function ($q) use ($request) {
+                $q->where('name', 'like', "%{$request->q}%");
+            });
+        }
+
+        $query->orderBy('created_at', 'desc');
+
+        return inertia('{{ modelSplitPascalCase }}/index', [
+            'data' => $query->paginate(10),
+        ]);
+    }
+
+    #[Permission('create-{{ modelSplitPascalCase }}')]
+    public function create(): Response
+    {
+        return inertia('{{ modelSplitPascalCase }}/form');
+    }
+
+    #[Permission('create-{{ modelSplitPascalCase }}')]
+    public function store(Request $request): RedirectResponse
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+        ]);
+
+        {{ Model }}::create([
+            'name' => $request->name
+        ]);
+
+        return redirect()->route('{{ models }}.index')
+            ->with('message', ['type' => 'success', 'message' => 'Item has beed created']);
+    }
+
+    #[Permission('update-{{ modelSplitPascalCase }}')]
+    public function edit({{ Model }} ${{ model }}): Response
+    {
+        return inertia('{{ modelSplitPascalCase }}/form', [
+            '{{ model }}' => ${{ model }},
+        ]);
+    }
+
+    #[Permission('update-{{ modelSplitPascalCase }}')]
+    public function update(Request $request, {{ Model }} ${{ model }}): RedirectResponse
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+        ]);
+
+        ${{ model }}->fill([
+            'name' => $request->name,
+        ]);
+
+        ${{ model }}->save();
+
+        return redirect()->route('{{ models }}.index')
+            ->with('message', ['type' => 'success', 'message' => 'Item has beed updated']);
+    }
+
+    #[Permission('delete-{{ modelSplitPascalCase }}')]
+    public function destroy({{ Model }} ${{ model }}): RedirectResponse
+    {
+        ${{ model }}->delete();
+
+        return redirect()->route('{{ models }}.index')
+            ->with('message', ['type' => 'success', 'message' => 'Item has beed deleted']);
+    }
+}

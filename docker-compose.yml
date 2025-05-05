@@ -1,0 +1,72 @@
+services:
+  app:
+      image: ajikamaludin/php83user:latest
+      container_name: template-app
+      working_dir: /var/www/
+      volumes:
+        - ./:/var/www
+        - /etc/timezone:/etc/timezone:ro
+        - /etc/localtime:/etc/localtime:ro
+      mem_limit: 512m
+      mem_reservation: 128M
+      cpus: 0.5
+      networks:
+        - template
+  nginx:
+    image: nginx:1.27-alpine
+    container_name: template-nginx
+    ports:
+      - 8000:80
+    volumes:
+      - ./:/var/www
+      - ./default.conf:/etc/nginx/conf.d/default.conf
+    mem_limit: 512m
+    mem_reservation: 128M
+    cpus: 0.5
+    networks:
+      - template
+  mariadb:
+    image: mariadb:latest
+    container_name: template-mariadb
+    ports:
+      - 3306:3306
+    volumes:
+      - mariadb:/var/lib/mysql
+      - ./database:/database
+    environment:
+      MARIADB_DATABASE: manufaktur_ssy
+      MARIADB_USER: manufaktur_ssy
+      MARIADB_PASSWORD: password
+      MARIADB_ROOT_PASSWORD: password
+    mem_limit: 512m
+    mem_reservation: 128M
+    cpus: 0.5
+    networks:
+      template:
+        ipv4_address: 10.100.100.100
+  phpmyadmin:
+    container_name: template-phpmyadmin
+    depends_on:
+      - mariadb
+    image: phpmyadmin
+    ports:
+      - "8090:80"
+    environment:
+      PMA_HOST: mariadb
+      MYSQL_ROOT_PASSWORD: password
+      UPLOAD_LIMIT: '2048M'
+    networks:
+      - template
+
+volumes:
+  mariadb: 
+    driver: local
+
+networks:
+  template:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+          - subnet: 10.100.100.0/24
+            gateway: 10.100.100.1

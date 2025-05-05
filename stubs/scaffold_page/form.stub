@@ -1,0 +1,102 @@
+import React, { useEffect, useState } from 'react'
+import { router, Head, Link, usePage } from '@inertiajs/react'
+import { isEmpty } from 'lodash'
+
+import AppLayout from '@/layouts/app-layout'
+import { Card, CardContent } from '@/components/ui/card'
+import { TextInput, InputError, Button } from '@/components/index'
+
+const breadcrumbs = [
+    {
+        title: '{{ ModelSplit }}',
+        href: route('{{ models }}.index'),
+    },
+    {
+        title: 'Form',
+        href: '#',
+    },
+]
+
+export default function Form(props) {
+    const {
+        props: { errors },
+    } = usePage()
+    const { {{ model }} } = props
+
+    const [processing, setProcessing] = useState(false)
+
+    const [name, setName] = useState('')
+
+    const handleSubmit = () => {
+        if (isEmpty({{ model }}) === false) {
+            router.put(
+                route('{{ models }}.update', {{ model }}),
+                {
+                    name: name,
+                },
+                {
+                    onStart: () => setProcessing(true),
+                    onFinish: (e) => {
+                        setProcessing(false)
+                    },
+                }
+            )
+            return
+        }
+        router.post(
+            route('{{ models }}.store'),
+            {
+                name: name,
+            },
+            {
+                onStart: () => setProcessing(true),
+                onFinish: (e) => {
+                    setProcessing(false)
+                },
+            }
+        )
+    }
+
+    useEffect(() => {
+        if (!isEmpty({{ model }})) {
+            setName({{ model }}.name)
+        }
+    }, [{{ model }}])
+
+    return (
+        <AppLayout breadcrumbs={breadcrumbs}>
+            <Head title="{{ ModelSplit }}" />
+            <div>
+                <Card>
+                    <CardContent>
+                        <div className="flex flex-col gap-4 justify-between">
+                            <TextInput
+                                name="name"
+                                value={name}
+                                onChange={(e) => setName(e.target.value)}
+                                label="Nama"
+                                error={errors.name}
+                            />
+
+                            <div className="flex items-center">
+                                <div className="flex space-x-2">
+                                    <Button
+                                        onClick={handleSubmit}
+                                        loading={processing}
+                                    >
+                                        Save
+                                    </Button>
+                                    <Link href={route('{{ models }}.index')}>
+                                        <Button variant="secondary">
+                                            Back
+                                        </Button>
+                                    </Link>
+                                </div>
+                            </div>
+                        </div>
+                    </CardContent>
+                </Card>
+            </div>
+        </AppLayout>
+    )
+}
