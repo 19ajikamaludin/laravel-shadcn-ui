@@ -71,7 +71,7 @@ this command will generate `app_name.zip` in your root folder and its file ready
 
 ## The UI
 
-![](screenshot_v3.gif?raw=true)
+![](screenshot_v3.png?raw=true)
 
 <hr/>
 
@@ -85,4 +85,4 @@ it can generate 3 type of crud : form modal, form page, and single form, run com
 php artisan scaffold
 ```
 
-![](screenshot_generator.gif?raw=true)
+<!-- ![](screenshot_generator.gif?raw=true) -->
