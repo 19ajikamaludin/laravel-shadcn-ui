@@ -4,16 +4,10 @@ namespace Database\Seeders;
 
 use App\Constants\PermissionConstant;
 use App\Constants\SettingConstant;
-use App\Models\Brand;
-use App\Models\Customer;
 use App\Models\Default\Permission;
 use App\Models\Default\Role;
 use App\Models\Default\Setting;
 use App\Models\Default\User;
-use App\Models\ProductCategory;
-use App\Models\ProductUnit;
-use App\Models\Supplier;
-use App\Models\Warehouse;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
