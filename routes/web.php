@@ -38,6 +38,9 @@ Route::middleware(['auth', 'verified', PermissionVerification::class])->group(fu
     // Setting
     Route::get('/settings', [SettingController::class, 'index'])->name('setting.index');
     Route::post('/settings', [SettingController::class, 'update'])->name('setting.update');
+
+    // #Generator Tag: Admin
+
 });
 
 // #Generator Tag: Guest
