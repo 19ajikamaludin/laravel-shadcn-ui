@@ -60,7 +60,7 @@ export default function Page(props) {
                             onClick={handleSubmit}
                             loading={processing}
                         >
-                            Save
+                            Simpan
                         </Button>
                     </div>
                     </CardContent>

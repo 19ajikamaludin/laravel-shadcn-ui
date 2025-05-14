@@ -128,11 +128,11 @@ export default function Index(props) {
                                                                         '{{ models }}.edit',
                                                                         {{ model }}.id
                                                                     )}
-                                                                    className="flex space-x-2"
+                                                                    
                                                                 >
                                                                     <Pencil />
                                                                     <span>
-                                                                        Edit
+                                                                        Ubah
                                                                     </span>
                                                                 </Link>
                                                             </DropdownMenuItem>
@@ -142,7 +142,6 @@ export default function Index(props) {
                                                                 asChild
                                                             >
                                                                 <div
-                                                                    className="flex space-x-2"
                                                                     onClick={() =>
                                                                         handleDeleteClick(
                                                                             {{ model }}
@@ -151,7 +150,7 @@ export default function Index(props) {
                                                                 >
                                                                     <Trash />
                                                                     <span>
-                                                                        Delete
+                                                                        Hapus
                                                                     </span>
                                                                 </div>
                                                             </DropdownMenuItem>

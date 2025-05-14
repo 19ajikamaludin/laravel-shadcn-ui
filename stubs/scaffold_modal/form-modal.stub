@@ -68,10 +68,10 @@ export default function FormModal(props) {
             </div>
             <div className="flex items-center space-x-2 my-4">
                 <Button onClick={handleSubmit} loading={processing}>
-                    Save
+                    Simpan
                 </Button>
                 <Button onClick={handleClose} variant="secondary">
-                    Cancel
+                    Batal
                 </Button>
             </div>
         </Modal>

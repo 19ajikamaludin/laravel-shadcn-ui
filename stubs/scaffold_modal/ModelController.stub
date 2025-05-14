@@ -25,7 +25,7 @@ class {{ Model }}Controller extends Controller
         $query->orderBy('created_at', 'desc');
 
         return inertia('{{ modelSplitPascalCase }}/index', [
-            'data' => $query->paginate(10),
+            'data' => $query->paginate(),
         ]);
     }
 
