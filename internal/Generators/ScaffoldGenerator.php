@@ -2,9 +2,9 @@
 
 namespace Internal\Generators;
 
-use Internal\Services\PermissionService;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
+use Internal\Services\PermissionService;
 
 class ScaffoldGenerator
 {
@@ -155,33 +155,38 @@ class ScaffoldGenerator
 
     public string $Model;
 
+    public string $model_snake_case;
+
     public bool $adminAccess = false;
 
-    public array $defaultDestinations; //for revert purpose
+    public array $defaultDestinations; // for revert purpose
 
-    public array $fields; //not yet used
+    public array $fields; // not yet used
 
     public array $replaces;
 
     public function __construct(
-        string $model, //$model always CamelCase
+        string $model, // $model always CamelCase
         bool $adminAccess = false,
         array $fields = [],
         public $createModelClass = false,
     ) {
-        //Customer -> customer or CustomerCare -> customerCare
+        // Customer -> customer or CustomerCare -> customerCare
         $this->model = Str::camel($model);
 
         // Customer -> Customer or CustomerCare -> Customer Care
-        $this->ModelSplit = implode(" ", explode("-", splitPascalCase($model)));
+        $this->ModelSplit = implode(' ', explode('-', splitPascalCase($model)));
 
-        //Customer -> customer or CustomerCare -> customer-care
+        // Customer -> customer or CustomerCare -> customer-care
         $this->modelSplitPascalCase = str(splitPascalCase($model))->lower();
 
-        //Customer -> customers or CustomerCare -> customer-cares
+        // Customer -> customer or CustomerCare -> customer_care
+        $this->model_snake_case = str($model)->snake();
+
+        // Customer -> customers or CustomerCare -> customer-cares
         $this->models = Str::plural(str(splitPascalCase($model))->lower());
 
-        $this->Model = $model; //Customer
+        $this->Model = $model; // Customer
 
         $this->adminAccess = $adminAccess;
 
@@ -198,6 +203,7 @@ class ScaffoldGenerator
             'Model' => $this->Model,
             'modelSplitPascalCase' => $this->modelSplitPascalCase,
             'ModelSplit' => $this->ModelSplit,
+            'model_snake_case' => $this->model_snake_case,
         ];
     }
 
@@ -208,7 +214,7 @@ class ScaffoldGenerator
 
     public function isModelExists()
     {
-        return File::exists(app_path('Models/' . $this->Model . '.php'));
+        return File::exists(app_path('Models/'.$this->Model.'.php'));
     }
 
     public function withProtectedAdminAccess($adminAccess)
@@ -243,10 +249,10 @@ class ScaffoldGenerator
                 ->addWebUse($this->Model)
                 ->addMenu($this->Model, $this->models, "view-{$this->modelSplitPascalCase}")
                 ->addWebRoutes([
-                    ['get', $this->models, $this->Model, 'index', $this->models . '.index', $positionName],
-                    ['post', $this->models, $this->Model, 'store', $this->models . '.store', $positionName],
-                    ['put', $this->models . '/{' . $this->model . '}', $this->Model, 'update', $this->models . '.update', $positionName],
-                    ['delete', $this->models . '/{' . $this->model . '}', $this->Model, 'destroy', $this->models . '.destroy', $positionName],
+                    ['get', $this->models, $this->Model, 'index', $this->models.'.index', $positionName],
+                    ['post', $this->models, $this->Model, 'store', $this->models.'.store', $positionName],
+                    ['put', $this->models.'/{'.$this->model_snake_case.'}', $this->Model, 'update', $this->models.'.update', $positionName],
+                    ['delete', $this->models.'/{'.$this->model_snake_case.'}', $this->Model, 'destroy', $this->models.'.destroy', $positionName],
                 ]);
 
             // Permission
@@ -304,12 +310,43 @@ class ScaffoldGenerator
                 ->addWebUse($this->Model)
                 ->addMenu($this->Model, $this->models, "view-{$this->modelSplitPascalCase}")
                 ->addWebRoutes([
-                    ['get', $this->models, $this->Model, 'index', $this->models . '.index', $positionName],
-                    ['post', $this->models, $this->Model, 'update', $this->models . '.update', $positionName],
+                    ['get', $this->models, $this->Model, 'index', $this->models.'.index', $positionName],
+                    ['post', $this->models, $this->Model, 'update', $this->models.'.update', $positionName],
                 ]);
 
             // Permission
-            PermissionGenerator::new()->addPermission('view-' . $this->model, 'View ' . $this->Model);
+            PermissionGenerator::new()->addPermission('view-'.$this->modelSplitPascalCase, 'View '.$this->ModelSplit, $this->model);
+            PermissionService::new()->sync();
+        } catch (\Exception $e) {
+            $this->removeDefaultDestinations();
+            info(self::class, ['message' => $e->getMessage()]);
+
+            return false;
+        }
+
+        return true;
+    }
+
+    public function ScaffoldTablePage()
+    {
+        try {
+            // File: ModelController.php, Index.jsx
+            FileGenerator::new($this->Model)
+                ->withResoucePath($this->modelSplitPascalCase)
+                ->withReplaces($this->replaces)
+                ->ScaffoldTablePage();
+
+            // Web Router
+            $positionName = $this->adminAccess ? '// #Generator Tag: Admin' : null;
+            RouteGenerator::new()
+                ->addWebUse($this->Model)
+                ->addMenu($this->Model, $this->models, "view-{$this->modelSplitPascalCase}")
+                ->addWebRoutes([
+                    ['get', $this->models, $this->Model, 'index', $this->models.'.index', $positionName],
+                ]);
+
+            // Permission
+            PermissionGenerator::new()->addPermission('view-'.$this->modelSplitPascalCase, 'View '.$this->ModelSplit, $this->model);
             PermissionService::new()->sync();
         } catch (\Exception $e) {
             $this->removeDefaultDestinations();
@@ -330,7 +367,7 @@ class ScaffoldGenerator
             File::delete($d);
         }
         if ($this->createModelClass) {
-            File::delete(app_path('Models/' . $this->Model . '.php'));
+            File::delete(app_path('Models/'.$this->Model.'.php'));
         }
     }
 
@@ -338,10 +375,10 @@ class ScaffoldGenerator
     {
         PermissionGenerator::new()
             ->addPermissions([
-                ["view-{$this->modelSplitPascalCase}", "View {$this->ModelSplit}"],
-                ["create-{$this->modelSplitPascalCase}", "Create {$this->ModelSplit}"],
-                ["update-{$this->modelSplitPascalCase}", "Update {$this->ModelSplit}"],
-                ["delete-{$this->modelSplitPascalCase}", "Delete {$this->ModelSplit}"],
+                ["view-{$this->modelSplitPascalCase}", "View {$this->ModelSplit}", $this->Model],
+                ["create-{$this->modelSplitPascalCase}", "Create {$this->ModelSplit}", $this->Model],
+                ["update-{$this->modelSplitPascalCase}", "Update {$this->ModelSplit}", $this->Model],
+                ["delete-{$this->modelSplitPascalCase}", "Delete {$this->ModelSplit}", $this->Model],
             ]);
 
         PermissionService::new()->sync();

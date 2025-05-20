@@ -35,3 +35,65 @@ if (!function_exists('formatIDR')) {
         return Number::format($number, 0, locale: 'id-ID');
     }
 }
+
+if (! function_exists('generateCodeFromString')) {
+    function generateCodeFromString($string)
+    {
+        $code = strtoupper(collect(explode(' ', $string))
+            ->filter()
+            ->map(fn ($word) => mb_substr($word, 0, 1))
+            ->implode(''));
+
+        return $code;
+    }
+}
+
+if (! function_exists('formatNumZero')) {
+    function formatNumZero($n, $max = 6) // 0000001
+    {
+        $number = '';
+        foreach (range(0, $max - strlen($n)) as $_) {
+            $number .= '0';
+        }
+
+        return $number.$n;
+    }
+}
+
+if (! function_exists('numberToRoman')) {
+    function numberToRoman($number)
+    {
+        $romans = [
+            1 => 'I',
+            2 => 'II',
+            3 => 'III',
+            4 => 'IV',
+            5 => 'V',
+            6 => 'VI',
+            7 => 'VII',
+            8 => 'VIII',
+            9 => 'IX',
+            10 => 'X',
+            11 => 'XI',
+            12 => 'XII',
+        ];
+
+        return $romans[$number] ?? '';
+    }
+}
+
+if (! function_exists('throw_validation_add_errors')) {
+    function throw_validation_add_errors($errors)
+    {
+        throw \Illuminate\Validation\ValidationException::withMessages($errors);
+    }
+}
+
+if (! function_exists('join_strings')) {
+    function join_strings($strings, $glue = ' | ')
+    {
+        return collect($strings)
+            ->filter(fn ($s) => empty($s) == false)
+            ->join($glue);
+    }
+}

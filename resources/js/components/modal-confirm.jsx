@@ -28,14 +28,15 @@ export const ModalConfirm = ({ modalState, onConfirm }) => {
 
                 <DialogFooter className="gap-2">
                     <DialogClose asChild>
-                        <Button variant="secondary">Cancel</Button>
+                        <Button variant="secondary">Batal</Button>
                     </DialogClose>
 
                     <Button
                         variant="destructive"
+                        className="bg-red-600"
                         asChild
                     >
-                        <button onClick={handleConfirm}>Delete</button>
+                        <button onClick={handleConfirm}>Hapus</button>
                     </Button>
                 </DialogFooter>
             </DialogContent>

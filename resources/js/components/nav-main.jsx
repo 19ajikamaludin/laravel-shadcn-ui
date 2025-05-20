@@ -16,6 +16,12 @@ import {
     TableProperties,
     UsersRound,
     BookText,
+    CircleDollarSignIcon,
+    Car,
+    Bike,
+    ShoppingCart,
+    FileText,
+    Warehouse,
 } from 'lucide-react'
 
 import {
@@ -51,6 +57,12 @@ const Icons = {
     UsersRound: UsersRound,
     TableProperties: TableProperties,
     BookText: BookText,
+    CircleDollarSignIcon: CircleDollarSignIcon,
+    Car: Car,
+    Bike: Bike,
+    ShoppingCart: ShoppingCart,
+    FileText: FileText,
+    Warehouse: Warehouse,
 }
 
 export const ItemIcon = ({ icon, ...rest }) => {

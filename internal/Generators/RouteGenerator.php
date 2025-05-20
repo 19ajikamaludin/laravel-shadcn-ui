@@ -16,8 +16,8 @@ class RouteGenerator
 
     public function addWebUse($model)
     {
-        $contoller = $model . 'Controller';
-        $use = "\n" . 'use App\Http\Controllers' . '\\' . $contoller . ';';
+        $contoller = $model.'Controller';
+        $use = "\n".'use App\Http\Controllers'.'\\'.$contoller.';';
 
         $file = File::get(base_path('routes/web.php'));
 
@@ -31,7 +31,7 @@ class RouteGenerator
 
     public function addWebRoute($method, $uri, $model, $func = null, $name = null, $positionName = null)
     {
-        $contoller = $model . 'Controller';
+        $contoller = $model.'Controller';
 
         $route = "\nRoute::$method('$uri'";
 
@@ -63,7 +63,26 @@ class RouteGenerator
         return $this;
     }
 
-    public function addMenu($name,  $routeName, $permissionName, $icon = 'TableProperties')
+    private function addSpaceAfterPositionOf($positionName)
+    {
+        if (empty($positionName)) {
+            return $this;
+        }
+
+        $routePath = base_path('routes/web.php');
+        $file = File::get($routePath);
+
+        $position = strpos($file, $positionName) + strlen($positionName) ?: -1;
+
+        if ($position) {
+            $file = substr_replace($file, "\n", $position, 0);
+            File::put($routePath, $file);
+        }
+
+        return $this;
+    }
+
+    public function addMenu($name, $routeName, $permissionName, $icon = 'TableProperties')
     {
         $menu = "
             [
@@ -72,7 +91,7 @@ class RouteGenerator
                 'route' => route('$routeName.index'),
                 'active' => request()->routeIs('$routeName.*'),
                 'permission' => '$permissionName',
-            ],";
+            ],\n";
 
         // Open the file in read mode to read its contents
         $file = File::get(app_path($this->menuFile));
@@ -97,6 +116,7 @@ class RouteGenerator
         foreach ($routes as $route) {
             $this->addWebRoute(...$route);
         }
+        $this->addSpaceAfterPositionOf('// #Generator Tag: Admin');
 
         return $this;
     }

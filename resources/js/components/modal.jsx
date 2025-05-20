@@ -31,6 +31,9 @@ export const Modal = ({
         '4xl': 'md:max-w-4xl',
         '5xl': 'md:max-w-5xl',
         '6xl': 'md:max-w-6xl',
+        '7xl': 'md:max-w-7xl',
+        '8xl': 'md:max-w-8xl',
+        full: 'w-full',
     }
 
     return (
@@ -44,7 +47,7 @@ export const Modal = ({
                     <DialogTitle>{title}</DialogTitle>
                     <DialogDescription></DialogDescription>
                 </DialogHeader>
-                <ScrollArea className={`max-h-[80vh] pr-2.5`}>
+                <ScrollArea className={`max-h-[80vh] mx-3 pr-2.5`}>
                     {children}
                 </ScrollArea>
             </DialogContent>

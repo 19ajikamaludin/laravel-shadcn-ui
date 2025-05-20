@@ -12,15 +12,9 @@ export default function FormModal(props) {
     const { data, setData, post, put, processing, errors, clearErrors } = 
         useForm(formState)
 
-    const handleOnChange = (event) => {
-        setData(
-            event.target.name,
-            event.target.type === 'checkbox'
-                ? event.target.checked
-                    ? 1
-                    : 0
-                : event.target.value
-        )
+    const handleOnChange = (e) => {
+        const { name, type, checked, value } = e.target
+        setData(name, type === 'checkbox' ? (checked ? 1 : 0) : value)
     }
 
     const handleReset = () => {

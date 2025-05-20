@@ -4,6 +4,7 @@ export { HasPermission } from '@/components/has-permission'
 export { InputError } from '@/components/input-error'
 export { Modal } from '@/components/modal'
 export { ModalConfirm } from '@/components/modal-confirm'
+export { ModalImage } from '@/components/modal-image'
 export { ModalSelectInput } from '@/components/modal-select-input'
 export { Pagination } from '@/components/pagination'
 export { SearchInput } from '@/components/search-input'
@@ -19,3 +20,4 @@ export {
     SelectArray,
     SelectObject,
 } from '@/components/select-option'
+export { Visible } from '@/components/visible'

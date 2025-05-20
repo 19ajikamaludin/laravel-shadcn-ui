@@ -1,7 +1,7 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { CalendarIcon } from 'lucide-react'
 
-import { cn, formatDate } from '@/lib/utils'
+import { cn, formatDate, formatStandartDate } from '@/lib/utils'
 import { Button } from '@/components/ui/button'
 import { Calendar } from '@/components/ui/calendar'
 import { Label } from '@/components/ui/label'
@@ -22,16 +22,24 @@ import {
  *
  */
 const FormDateInput = (props) => {
-    const { label, error, value, onChange } = props
+    const { label, error, value, onChange } = props // value always m/d/y
 
+    const [selectedDate, setSelectedDate] = useState(null)
     const [show, setShow] = useState(false)
 
     const handleSelectedDate = (date) => {
         setShow(false)
         if (date) {
-            onChange(date)
+            onChange(formatStandartDate(date))
         }
+        setSelectedDate(date)
     }
+
+    useEffect(() => {
+        if (value) {
+            setSelectedDate(new Date(value))
+        }
+    }, [value])
 
     const className = error ? 'text-red-600' : ''
 
@@ -53,9 +61,9 @@ const FormDateInput = (props) => {
                 <PopoverTrigger asChild>
                     <Button
                         id={label}
-                        variant={'outline'}
+                        variant={'ghost'}
                         className={cn(
-                            'justify-start text-left font-normal',
+                            'justify-start text-left font-normal border',
                             !value && 'text-muted-foreground'
                         )}
                         onClick={() => {
@@ -72,7 +80,7 @@ const FormDateInput = (props) => {
                 >
                     <Calendar
                         mode="single"
-                        selected={value}
+                        selected={selectedDate}
                         onSelect={handleSelectedDate}
                         initialFocus
                     />

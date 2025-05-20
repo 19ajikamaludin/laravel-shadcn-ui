@@ -31,7 +31,7 @@ class SettingController extends Controller
         foreach ($request->except(['app_logo']) as $key => $value) {
             Setting::updateOrCreate(
                 ['key' => $key],
-                ['value' => $value ?? ''],
+                ['value' => $value ?? '', 'type' => 'text'],
             );
         }
 

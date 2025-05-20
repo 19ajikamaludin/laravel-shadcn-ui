@@ -1,7 +1,7 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { CalendarIcon } from 'lucide-react'
 
-import { cn, formatDate } from '@/lib/utils'
+import { cn, converToDate, formatDate, formatStandartDate } from '@/lib/utils'
 import { Button } from '@/components/ui/button'
 import { Calendar } from '@/components/ui/calendar'
 import { Label } from '@/components/ui/label'
@@ -25,14 +25,28 @@ import { format } from 'date-fns'
 const FormDateRangeInput = (props) => {
     const { label, error, value, onChange } = props
 
-    const [show, setShow] = useState(false)
+    const [selectedDate, setSelectedDate] = useState({ from: null, to: null })
 
     const handleSelectedDate = (date) => {
-        setShow(false)
-        if (date) {
-            onChange(date)
+        if (date && typeof onChange === 'function') {
+            onChange({
+                start_date: formatStandartDate(date.from),
+                end_date: formatStandartDate(date.to),
+            })
         }
     }
+
+    useEffect(() => {
+        if (value) {
+            setSelectedDate({
+                from: converToDate(value.start_date),
+                to: converToDate(value.end_date),
+            })
+        }
+        if (value === null) {
+            setSelectedDate(null)
+        }
+    }, [value])
 
     const className = error ? 'text-red-600' : ''
 
@@ -51,21 +65,21 @@ const FormDateRangeInput = (props) => {
                 <PopoverTrigger asChild>
                     <Button
                         id={label}
-                        variant={'outline'}
+                        variant={'ghost'}
                         className={cn(
-                            'justify-start text-left font-normal min-w-[231px]',
-                            !value && 'text-muted-foreground'
+                            'border justify-start text-left font-normal min-w-[231px]',
+                            !selectedDate && 'text-muted-foreground'
                         )}
                     >
                         <CalendarIcon />
-                        {value?.from ? (
-                            value.to ? (
+                        {selectedDate?.from ? (
+                            selectedDate.to ? (
                                 <>
-                                    {format(value.from, 'dd/MM/yyyy')} -{' '}
-                                    {format(value.to, 'dd/MM/yyyy')}
+                                    {format(selectedDate.from, 'dd/MM/yyyy')} -{' '}
+                                    {format(selectedDate.to, 'dd/MM/yyyy')}
                                 </>
                             ) : (
-                                format(value.from, 'dd/MM/yyyy')
+                                format(selectedDate.from, 'dd/MM/yyyy')
                             )
                         ) : (
                             <span>filter date</span>
@@ -78,8 +92,8 @@ const FormDateRangeInput = (props) => {
                 >
                     <Calendar
                         mode="range"
-                        defaultMonth={value?.from}
-                        selected={value}
+                        defaultMonth={selectedDate?.from}
+                        selected={selectedDate}
                         onSelect={handleSelectedDate}
                         numberOfMonths={2}
                     />

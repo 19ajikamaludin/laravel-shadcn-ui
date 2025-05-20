@@ -165,7 +165,7 @@ export const SelectObject = ({
         >
             {Object.keys(options).map((option) => (
                 <Option
-                    value={options[option]}
+                    value={option}
                     key={option}
                 >
                     {options[option]}

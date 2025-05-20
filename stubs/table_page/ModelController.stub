@@ -1,0 +1,31 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\{{ Model }};
+use App\Attributes\Permission;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
+use Inertia\Response;
+
+class {{ Model }}Controller extends Controller
+{
+    #[Permission('view-{{ modelSplitPascalCase }}')]
+    public function index(Request $request): Response
+    {
+        $query = {{ Model }}::query();
+
+        if ($request->q) {
+            // multi columns search 
+            $query->where(function ($q) use ($request) {
+                $q->where('name', 'ilike', "%{$request->q}%");
+            });
+        }
+
+        $query->orderBy('created_at', 'desc');
+
+        return inertia('{{ modelSplitPascalCase }}/index', [
+            'data' => $query->paginate(),
+        ]);
+    }
+}

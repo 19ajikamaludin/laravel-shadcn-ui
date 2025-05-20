@@ -13,7 +13,7 @@ class ZipService
 {
     protected $zip;
 
-    protected $chunkSize = 2000; //2000 files
+    protected $chunkSize = 2000; // 2000 files
 
     protected $excludedContains = [
         '.git/',

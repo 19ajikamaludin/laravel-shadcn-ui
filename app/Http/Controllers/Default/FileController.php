@@ -11,38 +11,59 @@ use Illuminate\Validation\Rules\File as FileRule;
 
 class FileController extends Controller
 {
+    const TYPES = [
+        'excel/csv' => 'text/csv,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+        'image' => 'image/jpg,image/jpeg,image/png',
+    ];
+
     public function show(string $name)
     {
-        $path = Storage::disk('public')->path($name);
+        $path = null;
+        $file = File::where('hash_name', $name)->first();
 
+        // file di spesific path
+        if ($file != null) {
+            $path = Storage::disk('public')->path($file->dir . $name);
+        }
+
+        // file in default
         if (Storage::disk('default')->exists($name)) {
             $path = Storage::disk('default')->path($name);
 
             return response()->download($path, $name);
         }
 
-        $file = File::where('hash_name', $name)->first();
+        if ($path == null) {
+            abort(404);
+        }
 
-        return response()->download($path, $file?->upload_name);
+        return response()->download($path, $file?->upload_name ?? $name);
     }
 
     public function store(Request $request)
     {
-        $rule = ['required', 'file', 'max:62920']; //62M
+
+        $rule = ['required', 'file', 'max:62920']; // 62M
+
         if ($request->filemimes != '') {
-            $rule[] = FileRule::types($request->filemimes);
+            $filemimes = self::TYPES[$request->filemimes];
+            $rule[] = FileRule::types($filemimes);
         }
 
         $request->validate([
             'file' => $rule,
+            'path' => 'nullable|string',
         ]);
 
         $file = $request->file('file');
+        $dir = $request->input('dir', 'tmp') . '/';
 
         // the `/` its mean that in disk public it will store in root folder
-        Storage::disk('public')->put('/', $file);
+        Storage::disk('public')->put($dir, $file);
 
-        File::create([
+        $uploaded = File::create([
+            'dir' => $dir,
+            'hash_name' => $file->hashName(),
             'upload_name' => $file->getClientOriginalName(),
             'hash_name' => $file->hashName(),
             'name' => $file->getClientOriginalName(),
@@ -51,9 +72,9 @@ class FileController extends Controller
 
         return response()->json([
             'id' => Str::ulid(),
-            'name_original' => $file->getClientOriginalName(),
-            'name' => $file->hashName(),
-            'url' => route('file.show', ['file' => $file->hashName()]),
+            'name_original' => $uploaded->upload_name,
+            'name' => $uploaded->hash_name,
+            'url' => route('file.show', ['file' => $uploaded->hash_name]),
         ]);
     }
 }

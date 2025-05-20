@@ -1,4 +1,4 @@
-import { Link } from '@inertiajs/react'
+import { router } from '@inertiajs/react'
 import { ArrowLeft } from 'lucide-react'
 import { Component } from 'react'
 
@@ -20,7 +20,7 @@ class ErrorBoundary extends Component {
 
     handleBack() {
         this.setState({ hasError: false, error: null })
-        window.history.back()
+        router.visit(route('dashboard'))
     }
 
     render() {
@@ -38,7 +38,7 @@ class ErrorBoundary extends Component {
                 >
                     <div className="flex flex-row items-center gap-2">
                         <ArrowLeft />
-                        Back
+                        Kembali
                     </div>
                     <div className="border-l-2 pl-2 border-red-400">
                         <h1>Something went wrong:</h1>

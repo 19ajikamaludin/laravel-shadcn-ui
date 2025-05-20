@@ -2,10 +2,10 @@
 
 namespace Internal\Commands;
 
-use Internal\Generators\ScaffoldGenerator;
-use Internal\Rules\PascalCase;
 use Illuminate\Contracts\Console\PromptsForMissingInput;
 use Illuminate\Support\Facades\Validator;
+use Internal\Generators\ScaffoldGenerator;
+use Internal\Rules\PascalCase;
 
 use function Laravel\Prompts\confirm;
 use function Laravel\Prompts\select;
@@ -53,7 +53,7 @@ class ScaffoldCommand extends Command implements PromptsForMissingInput
      */
     public function handle()
     {
-        $model = $this->argument('model'); //input must CamelCase
+        $model = $this->argument('model'); // input must CamelCase
 
         $validator = Validator::make(
             ['model' => $model],
@@ -61,7 +61,7 @@ class ScaffoldCommand extends Command implements PromptsForMissingInput
         );
 
         if ($validator->fails()) {
-            $this->error('Validation failed: ' . $validator->errors()->first('model'));
+            $this->error('Validation failed: '.$validator->errors()->first('model'));
 
             return 1;
         }
@@ -74,10 +74,10 @@ class ScaffoldCommand extends Command implements PromptsForMissingInput
             return 1;
         }
 
-        if (!$scaffold->isModelExists()) {
+        if (! $scaffold->isModelExists()) {
             $_ = $scaffold->withCreateModelClass(
                 $this,
-                $_ = confirm("App\Models\\" . $scaffold->Model . ' does not exist, create it ?')
+                $_ = confirm("App\Models\\".$scaffold->Model.' does not exist, create it ?')
             );
         }
 
@@ -87,7 +87,7 @@ class ScaffoldCommand extends Command implements PromptsForMissingInput
 
         $type = select(
             label: 'Which type to generate ?',
-            options: ['Scaffold Modal', 'Scaffold Page', 'Single Page'],
+            options: ['Scaffold Modal', 'Scaffold Page', 'Single Page', 'Table Page'],
             default: 'Scaffold Modal',
         );
 
@@ -95,6 +95,7 @@ class ScaffoldCommand extends Command implements PromptsForMissingInput
             'Scaffold Modal' => $scaffold->ScaffoldModal(),
             'Scaffold Page' => $scaffold->ScaffoldPage(),
             'Single Page' => $scaffold->ScaffoldSinglePage(),
+            'Table Page' => $scaffold->ScaffoldTablePage(),
         };
 
         if ($result) {

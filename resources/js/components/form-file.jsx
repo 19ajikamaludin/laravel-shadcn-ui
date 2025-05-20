@@ -9,6 +9,7 @@ import { Spinner } from '@/components/spinner'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
+import { Download } from 'lucide-react'
 
 /**
  *
@@ -25,7 +26,16 @@ import { Label } from '@/components/ui/label'
  * />
  *
  */
-export function FormFile({ label, onChange, error, preview, help, url, filemimes = '' }) {
+export function FormFile({
+    label,
+    onChange,
+    error,
+    preview,
+    help,
+    url,
+    filemimes = '',
+    dir = null,
+}) {
     const {
         props: { auth },
     } = usePage()
@@ -56,6 +66,7 @@ export function FormFile({ label, onChange, error, preview, help, url, filemimes
         const formData = new FormData()
         formData.append('filemimes', filemimes)
         formData.append('file', e.target.files[0])
+        formData.append('dir', dir)
 
         axios
             .post(route('api.file.store'), formData, {
@@ -64,7 +75,11 @@ export function FormFile({ label, onChange, error, preview, help, url, filemimes
                     Authorization: auth.jwt_prefix + auth.jwt_token,
                 },
                 onUploadProgress: function (progressEvent) {
-                    setPercent(Math.round((progressEvent.loaded * 100) / progressEvent.total))
+                    setPercent(
+                        Math.round(
+                            (progressEvent.loaded * 100) / progressEvent.total
+                        )
+                    )
                 },
             })
             .then((response) => {
@@ -96,7 +111,9 @@ export function FormFile({ label, onChange, error, preview, help, url, filemimes
                 onClick={handleClick}
                 className="flex w-full items-center"
             >
-                <Button className="rounded-r-none">{loading ? <Spinner /> : ' Choose File'}</Button>
+                <Button className="rounded-r-none">
+                    {loading ? <Spinner /> : ' Choose File'}
+                </Button>
                 <Input
                     type="text"
                     id={label}
@@ -104,6 +121,21 @@ export function FormFile({ label, onChange, error, preview, help, url, filemimes
                     readOnly
                     className={`w-full rounded-l-none`}
                 />
+                {link && (
+                    <a
+                        className="text-xs underline ml-2"
+                        href={link}
+                        target="_blank"
+                        title="Download"
+                    >
+                        <Button
+                            variant="outline"
+                            size="icon"
+                        >
+                            <Download />
+                        </Button>
+                    </a>
+                )}
             </div>
 
             <input
@@ -116,17 +148,6 @@ export function FormFile({ label, onChange, error, preview, help, url, filemimes
             {help && (
                 <div>
                     <span className="text-xs underline">{help}</span>
-                </div>
-            )}
-            {link && (
-                <div>
-                    <a
-                        className="text-xs underline"
-                        href={link}
-                        target="_blank"
-                    >
-                        Download File
-                    </a>
                 </div>
             )}
             <InputError message={error} />

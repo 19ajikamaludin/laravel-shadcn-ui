@@ -3,13 +3,29 @@ import { useRef } from 'react'
 
 import { InputError } from '@/components/input-error'
 import { Button } from '@/components/ui/button'
-import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogTitle, DialogTrigger } from '@/components/ui/dialog'
+import {
+    Dialog,
+    DialogClose,
+    DialogContent,
+    DialogDescription,
+    DialogFooter,
+    DialogTitle,
+    DialogTrigger,
+} from '@/components/ui/dialog'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 
 export default function DeleteUser() {
     const passwordInput = useRef(null)
-    const { data, setData, delete: destroy, processing, reset, errors, clearErrors } = useForm({})
+    const {
+        data,
+        setData,
+        delete: destroy,
+        processing,
+        reset,
+        errors,
+        clearErrors,
+    } = useForm({})
 
     const deleteUser = (e) => {
         e.preventDefault()
@@ -31,12 +47,16 @@ export default function DeleteUser() {
         <div className="space-y-6">
             <header>
                 <h3 className="mb-0.5 text-base font-medium">Delete account</h3>
-                <p className="text-muted-foreground text-sm">Delete your account and all of its resources</p>
+                <p className="text-muted-foreground text-sm">
+                    Delete your account and all of its resources
+                </p>
             </header>
             <div className="space-y-4 rounded-lg border border-red-100 bg-red-50 p-4 dark:border-red-200/10 dark:bg-red-700/10">
                 <div className="relative space-y-0.5 text-red-600 dark:text-red-100">
                     <p className="font-medium">Warning</p>
-                    <p className="text-sm">Please proceed with caution, this cannot be undone.</p>
+                    <p className="text-sm">
+                        Please proceed with caution, this cannot be undone.
+                    </p>
                 </div>
 
                 <Dialog>
@@ -44,10 +64,14 @@ export default function DeleteUser() {
                         <Button variant="destructive">Delete account</Button>
                     </DialogTrigger>
                     <DialogContent>
-                        <DialogTitle>Are you sure you want to delete your account?</DialogTitle>
+                        <DialogTitle>
+                            Are you sure you want to delete your account?
+                        </DialogTitle>
                         <DialogDescription>
-                            Once your account is deleted, all of its resources and data will also be permanently deleted. Please enter your password
-                            to confirm you would like to permanently delete your account.
+                            Once your account is deleted, all of its resources
+                            and data will also be permanently deleted. Please
+                            enter your password to confirm you would like to
+                            permanently delete your account.
                         </DialogDescription>
                         <form
                             className="space-y-6"
@@ -67,7 +91,9 @@ export default function DeleteUser() {
                                     name="password"
                                     ref={passwordInput}
                                     value={data.password}
-                                    onChange={(e) => setData('password', e.target.value)}
+                                    onChange={(e) =>
+                                        setData('password', e.target.value)
+                                    }
                                     placeholder="Password"
                                     autoComplete="current-password"
                                 />
@@ -81,7 +107,7 @@ export default function DeleteUser() {
                                         variant="secondary"
                                         onClick={closeModal}
                                     >
-                                        Cancel
+                                        Batal
                                     </Button>
                                 </DialogClose>
 
@@ -90,7 +116,9 @@ export default function DeleteUser() {
                                     disabled={processing}
                                     asChild
                                 >
-                                    <button type="submit">Delete account</button>
+                                    <button type="submit">
+                                        Delete account
+                                    </button>
                                 </Button>
                             </DialogFooter>
                         </form>

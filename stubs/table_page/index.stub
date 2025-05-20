@@ -1,0 +1,91 @@
+import { useEffect, useState } from 'react'
+import { usePrevious } from 'react-use'
+import { Head, Link, router } from '@inertiajs/react'
+import { EllipsisVertical, Pencil, Trash } from 'lucide-react'
+
+import AppLayout from '@/layouts/app-layout'
+import {
+    Table,
+    TableBody,
+    TableCell,
+    TableHead,
+    TableHeader,
+    TableRow,
+} from '@/components/ui/table'
+import { Card, CardContent } from '@/components/ui/card'
+import {
+    SearchInput,
+    Pagination,
+} from '@/components/index'
+
+const breadcrumbs = [
+    {
+        title: '{{ Model }}',
+        href: route('{{ models }}.index'),
+    },
+]
+
+export default function Index(props) {
+    const {
+        data: { links, data },
+    } = props
+
+    const [search, setSearch] = useState('')
+    const preValue = usePrevious(search)
+
+    const params = { q: search }
+    useEffect(() => {
+        if (preValue) {
+            router.get(
+                route(route().current()),
+                { q: search },
+                {
+                    replace: true,
+                    preserveState: true,
+                }
+            )
+        }
+    }, [search])
+
+    return (
+        <AppLayout breadcrumbs={breadcrumbs}>
+            <Head title="{{ ModelSplit }}" />
+
+            <div>
+                <Card>
+                    <CardContent>
+                        <div className="space-y-6">
+                            <div className="flex justify-end">
+                                <div className="flex items-center">
+                                    <SearchInput
+                                        onChange={(e) =>
+                                            setSearch(e.target.value)
+                                        }
+                                        value={search}
+                                    />
+                                </div>
+                            </div>
+                            <Table>
+                                <TableHeader>
+                                    <TableRow>
+                                        <TableHead>Nama</TableHead>
+                                    </TableRow>
+                                </TableHeader>
+                                <TableBody>
+                                    {data.map(({{ model }}) => (
+                                        <TableRow key={{{ model }}.id}>
+                                            <TableCell className="font-medium">
+                                                {{{ model }}.name}
+                                            </TableCell>
+                                        </TableRow>
+                                    ))}
+                                </TableBody>
+                            </Table>
+                            <Pagination links={links} params={params} />
+                        </div>
+                    </CardContent>
+                </Card>
+            </div>
+        </AppLayout>
+    )
+}

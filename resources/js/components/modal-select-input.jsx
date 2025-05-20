@@ -62,6 +62,7 @@ export function ModalSelectInput(props) {
         placeholder = '',
         readOnly = false,
         additionalButton = null,
+        size = 'md',
     } = props
 
     const [headers] = useState(
@@ -105,16 +106,21 @@ export function ModalSelectInput(props) {
         }
         setTableHeaders(
             params.headers.split('|').map((_, index) => {
-                return params.columns.split('|')[index]
+                return params.columns.split('|').filter((i) => i !== 'id')[
+                    index
+                ]
             })
         )
         setTableHeaderAlias(
-            params.headers.split('|').map((i) => {
-                if (i.includes('.')) {
-                    return i.split('.')[1]
-                }
-                return i
-            })
+            params.headers
+                .split('|')
+
+                .map((i) => {
+                    if (i.includes('.')) {
+                        return i.split('.')[1]
+                    }
+                    return i
+                })
         )
     }, [params])
 
@@ -189,6 +195,7 @@ export function ModalSelectInput(props) {
             <Modal
                 modalState={selectModal}
                 title={label}
+                size={size}
             >
                 <SearchInput
                     value={search}
@@ -200,7 +207,7 @@ export function ModalSelectInput(props) {
                         <div>Loading </div>
                     </div>
                 ) : (
-                    <>
+                    <div className="w-full overflow-y-auto">
                         <Table className={'mt-3'}>
                             <TableHeader>
                                 <TableRow>
@@ -230,14 +237,14 @@ export function ModalSelectInput(props) {
                             </TableBody>
                         </Table>
 
-                        <div className="mt-2 flex w-full justify-center">
+                        <div className="mt-2 flex w-full justify-center overflow-x-clip">
                             <PaginationApi
                                 links={data}
                                 page={data.current_page}
                                 onPageChange={fetch}
                             />
                         </div>
-                    </>
+                    </div>
                 )}
             </Modal>
         </>

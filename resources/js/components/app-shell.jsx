@@ -2,7 +2,11 @@ import { SidebarProvider } from '@/components/ui/sidebar'
 import { useState } from 'react'
 
 export function AppShell({ children, variant = 'header' }) {
-    const [isOpen, setIsOpen] = useState(() => (typeof window !== 'undefined' ? localStorage.getItem('sidebar') !== 'false' : true))
+    const [isOpen, setIsOpen] = useState(() =>
+        typeof window !== 'undefined'
+            ? localStorage.getItem('sidebar') !== 'false'
+            : true
+    )
 
     const handleSidebarChange = (open) => {
         setIsOpen(open)
@@ -13,7 +17,9 @@ export function AppShell({ children, variant = 'header' }) {
     }
 
     if (variant === 'header') {
-        return <div className="flex min-h-screen w-full flex-col">{children}</div>
+        return (
+            <div className="flex min-h-screen w-full flex-col">{children}</div>
+        )
     }
 
     return (
