@@ -102,6 +102,13 @@ export const formatDate = (date) => {
     return format(date, 'dd/MM/yyyy')
 }
 
+export const formatStandartDate = (date) => {
+    if (isEmpty(date)) {
+        return ''
+    }
+    return format(date, 'yyyy-mm-dd')
+}
+
 export const formatDateTime = (date) => {
     if (isEmpty(date)) {
         return ''
