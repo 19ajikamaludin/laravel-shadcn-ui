@@ -8,7 +8,6 @@ use App\Models\Default\Permission;
 use App\Models\Default\Role;
 use App\Models\Default\Setting;
 use App\Models\Default\User;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class DefaultSeeder extends Seeder
@@ -26,7 +25,7 @@ class DefaultSeeder extends Seeder
             Permission::insert(['id' => str()->ulid(), ...$permission]);
         }
 
-        $role = Role::create(['name' => 'Administator']);
+        $role = Role::create(['name' => Role::DEFAULT]);
 
         $permissions = Permission::all();
         foreach ($permissions as $permission) {

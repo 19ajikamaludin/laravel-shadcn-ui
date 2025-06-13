@@ -116,3 +116,7 @@ export const converToDate = (date) => {
     }
     return new Date(date)
 }
+
+export const getDateLastMonth = () => {
+    return startOfMonth(subMonths(new Date(), 1))
+}
