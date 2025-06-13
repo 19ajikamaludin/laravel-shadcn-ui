@@ -4,15 +4,7 @@ import AppLogo from '@/components/app-logo'
 import { NavFooter } from '@/components/nav-footer'
 import { NavMain } from '@/components/nav-main'
 import { NavUser } from '@/components/nav-user'
-import {
-    Sidebar,
-    SidebarContent,
-    SidebarFooter,
-    SidebarHeader,
-    SidebarMenu,
-    SidebarMenuButton,
-    SidebarMenuItem,
-} from '@/components/ui/sidebar'
+import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar'
 import { filterAllowedMenu } from '@/lib/utils'
 
 const footerNavItems = [
@@ -43,10 +35,7 @@ export function AppSidebar() {
                             size="lg"
                             asChild
                         >
-                            <Link
-                                href="/dashboard"
-                                prefetch
-                            >
+                            <Link href="/dashboard">
                                 <AppLogo />
                             </Link>
                         </SidebarMenuButton>

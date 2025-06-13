@@ -1,12 +1,5 @@
 import { Button } from '@/components/ui/button'
-import {
-    Dialog,
-    DialogClose,
-    DialogContent,
-    DialogFooter,
-    DialogHeader,
-    DialogTitle,
-} from '@/components/ui/dialog'
+import { Dialog, DialogClose, DialogContent, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog'
 
 export const ModalConfirm = ({ modalState, onConfirm }) => {
     const handleConfirm = () => {
@@ -21,9 +14,7 @@ export const ModalConfirm = ({ modalState, onConfirm }) => {
         >
             <DialogContent className="md:max-w-md">
                 <DialogHeader>
-                    <DialogTitle>
-                        Are you sure you want to delete Item?
-                    </DialogTitle>
+                    <DialogTitle>Are you sure you want to delete Item?</DialogTitle>
                 </DialogHeader>
 
                 <DialogFooter className="gap-2">

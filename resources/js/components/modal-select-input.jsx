@@ -11,14 +11,7 @@ import { SearchInput } from '@/components/search-input'
 import { Spinner } from '@/components/spinner'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
-import {
-    Table,
-    TableBody,
-    TableCell,
-    TableHead,
-    TableHeader,
-    TableRow,
-} from '@/components/ui/table'
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
 import { useDebounce } from '@/hooks/use-debounce'
 import { useModal } from '@/hooks/use-modal'
 import { usePaginationApi } from '@/hooks/use-pagination-api'
@@ -52,22 +45,9 @@ export function ModalSelectInput(props) {
         props: { auth },
     } = usePage()
 
-    const {
-        label,
-        error,
-        value,
-        onChange,
-        onRemove,
-        params,
-        placeholder = '',
-        readOnly = false,
-        additionalButton = null,
-        size = 'md',
-    } = props
+    const { label, error, value, onChange, onRemove, params, placeholder = '', readOnly = false, additionalButton = null, size = 'md' } = props
 
-    const [headers] = useState(
-        params.columns.split('|').filter((i) => i !== 'id')
-    )
+    const [headers] = useState(params.columns.split('|').filter((i) => i !== 'id'))
 
     const [table_headers, setTableHeaders] = useState([])
     const [table_header_alias, setTableHeaderAlias] = useState([])
@@ -99,17 +79,13 @@ export function ModalSelectInput(props) {
     useEffect(() => {
         if (isEmpty(params.headers) === true) {
             setTableHeaders(params.columns.split('|').filter((i) => i !== 'id'))
-            setTableHeaderAlias(
-                params.columns.split('|').filter((i) => i !== 'id')
-            )
+            setTableHeaderAlias(params.columns.split('|').filter((i) => i !== 'id'))
             return
         }
         setTableHeaders(
             params.headers.split('|').map((_, index) => {
-                return params.columns.split('|').filter((i) => i !== 'id')[
-                    index
-                ]
-            })
+                return params.columns.split('|').filter((i) => i !== 'id')[index]
+            }),
         )
         setTableHeaderAlias(
             params.headers
@@ -120,7 +96,7 @@ export function ModalSelectInput(props) {
                         return i.split('.')[1]
                     }
                     return i
-                })
+                }),
         )
     }, [params])
 
@@ -149,7 +125,7 @@ export function ModalSelectInput(props) {
                     .map((h) => {
                         return value[h]
                     })
-                    .join(' - ')
+                    .join(' - '),
             )
         } else {
             setSelected('')
@@ -228,9 +204,7 @@ export function ModalSelectInput(props) {
                                         key={item.id}
                                     >
                                         {table_headers.map((h) => (
-                                            <TableCell key={`${item.id}-${h}`}>
-                                                {item[h]}
-                                            </TableCell>
+                                            <TableCell key={`${item.id}-${h}`}>{item[h]}</TableCell>
                                         ))}
                                     </TableRow>
                                 ))}

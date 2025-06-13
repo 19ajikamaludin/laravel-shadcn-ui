@@ -1,32 +1,14 @@
-import { useEffect, useState } from 'react'
 import { Head, router } from '@inertiajs/react'
-import { usePrevious } from 'react-use'
 import { EllipsisVertical, Pencil, Trash } from 'lucide-react'
+import { useEffect, useState } from 'react'
+import { usePrevious } from 'react-use'
 
-import AppLayout from '@/layouts/app-layout'
-import {
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuItem,
-    DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu'
-import {
-    Table,
-    TableBody,
-    TableCell,
-    TableHead,
-    TableHeader,
-    TableRow,
-} from '@/components/ui/table'
+import { Button, HasPermission, ModalConfirm, Pagination, SearchInput } from '@/components/index'
 import { Card, CardContent } from '@/components/ui/card'
-import {
-    Button,
-    SearchInput,
-    Pagination,
-    HasPermission,
-    ModalConfirm,
-} from '@/components/index'
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
 import { useModal } from '@/hooks/use-modal'
+import AppLayout from '@/layouts/app-layout'
 
 import FormModal from './form-modal'
 
@@ -73,7 +55,7 @@ export default function Index(props) {
                 {
                     replace: true,
                     preserveState: true,
-                }
+                },
             )
         }
     }, [search])
@@ -88,15 +70,11 @@ export default function Index(props) {
                         <div className="space-y-6">
                             <div className="flex justify-between">
                                 <HasPermission p="create-permission">
-                                    <Button onClick={() => toggleFormModal()}>
-                                        Tambah
-                                    </Button>
+                                    <Button onClick={() => toggleFormModal()}>Tambah</Button>
                                 </HasPermission>
                                 <div className="flex items-center">
                                     <SearchInput
-                                        onChange={(e) =>
-                                            setSearch(e.target.value)
-                                        }
+                                        onChange={(e) => setSearch(e.target.value)}
                                         value={search}
                                     />
                                 </div>
@@ -112,17 +90,11 @@ export default function Index(props) {
                                 <TableBody>
                                     {data.map((permission) => (
                                         <TableRow key={permission.id}>
-                                            <TableCell className="font-medium">
-                                                {permission.name}
-                                            </TableCell>
-                                            <TableCell>
-                                                {permission.label}
-                                            </TableCell>
+                                            <TableCell className="font-medium">{permission.name}</TableCell>
+                                            <TableCell>{permission.label}</TableCell>
                                             <TableCell className="text-right">
                                                 <DropdownMenu>
-                                                    <DropdownMenuTrigger
-                                                        asChild
-                                                    >
+                                                    <DropdownMenuTrigger asChild>
                                                         <Button
                                                             variant="outline"
                                                             size="icon"
@@ -132,40 +104,24 @@ export default function Index(props) {
                                                     </DropdownMenuTrigger>
                                                     <DropdownMenuContent>
                                                         <HasPermission p="update-permission">
-                                                            <DropdownMenuItem
-                                                                asChild
-                                                            >
+                                                            <DropdownMenuItem asChild>
                                                                 <div
                                                                     className="flex space-x-2"
-                                                                    onClick={() =>
-                                                                        toggleFormModal(
-                                                                            permission
-                                                                        )
-                                                                    }
+                                                                    onClick={() => toggleFormModal(permission)}
                                                                 >
                                                                     <Pencil />
-                                                                    <span>
-                                                                        Edit
-                                                                    </span>
+                                                                    <span>Edit</span>
                                                                 </div>
                                                             </DropdownMenuItem>
                                                         </HasPermission>
                                                         <HasPermission p="delete-permission">
-                                                            <DropdownMenuItem
-                                                                asChild
-                                                            >
+                                                            <DropdownMenuItem asChild>
                                                                 <div
                                                                     className="flex space-x-2"
-                                                                    onClick={() =>
-                                                                        handleDeleteClick(
-                                                                            permission
-                                                                        )
-                                                                    }
+                                                                    onClick={() => handleDeleteClick(permission)}
                                                                 >
                                                                     <Trash />
-                                                                    <span>
-                                                                        Delete
-                                                                    </span>
+                                                                    <span>Delete</span>
                                                                 </div>
                                                             </DropdownMenuItem>
                                                         </HasPermission>

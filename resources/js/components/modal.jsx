@@ -1,19 +1,7 @@
-import {
-    Dialog,
-    DialogContent,
-    DialogDescription,
-    DialogHeader,
-    DialogTitle,
-} from '@/components/ui/dialog'
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog'
 import { ScrollArea } from '@/components/ui/scroll-area'
 
-export const Modal = ({
-    modalState,
-    title,
-    onClose,
-    size = 'md',
-    children,
-}) => {
+export const Modal = ({ modalState, title, onClose, size = 'md', children }) => {
     const handleOpenChange = () => {
         modalState.toggle()
         if (onClose) {
@@ -47,9 +35,7 @@ export const Modal = ({
                     <DialogTitle>{title}</DialogTitle>
                     <DialogDescription></DialogDescription>
                 </DialogHeader>
-                <ScrollArea className={`max-h-[80vh] mx-3 pr-2.5`}>
-                    {children}
-                </ScrollArea>
+                <ScrollArea className={`mx-3 max-h-[80vh] pr-2.5`}>{children}</ScrollArea>
             </DialogContent>
         </Dialog>
     )

@@ -20,7 +20,7 @@ const TextInput = forwardRef((props, ref) => {
     const className = error ? 'text-red-600' : ''
 
     return (
-        <div className="w-full grid gap-2">
+        <div className="grid w-full gap-2">
             {label && (
                 <Label
                     htmlFor={label}

@@ -1,26 +1,18 @@
-import React, { useEffect } from 'react'
 import { useForm } from '@inertiajs/react'
 import { isEmpty } from 'lodash'
+import { useEffect } from 'react'
 
-import { Modal, Button, TextInput } from '@/components/index'
+import { Button, Modal, TextInput } from '@/components/index'
 
 export default function FormModal(props) {
     const { modalState } = props
-    const { data, setData, post, put, processing, errors, reset, clearErrors } =
-        useForm({
-            name: '',
-            label: '',
-        })
+    const { data, setData, post, put, processing, errors, reset, clearErrors } = useForm({
+        name: '',
+        label: '',
+    })
 
     const handleOnChange = (event) => {
-        setData(
-            event.target.name,
-            event.target.type === 'checkbox'
-                ? event.target.checked
-                    ? 1
-                    : 0
-                : event.target.value
-        )
+        setData(event.target.name, event.target.type === 'checkbox' ? (event.target.checked ? 1 : 0) : event.target.value)
     }
 
     const handleReset = () => {
@@ -77,7 +69,7 @@ export default function FormModal(props) {
                     error={errors.label}
                 />
             </div>
-            <div className="flex items-center space-x-2 my-4">
+            <div className="my-4 flex items-center space-x-2">
                 <Button
                     onClick={handleSubmit}
                     loading={processing}

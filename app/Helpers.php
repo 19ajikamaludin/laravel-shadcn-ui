@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Number;
 
-if (!function_exists('splitPascalCase')) {
+if (! function_exists('splitPascalCase')) {
     function splitPascalCase($string)
     {
         $word = '';
@@ -14,24 +14,37 @@ if (!function_exists('splitPascalCase')) {
 
                 continue;
             }
-            $word .= '-' . $s;
+            $word .= '-'.$s;
         }
 
         return $word;
     }
 }
 
-if (!function_exists('get_php_path')) {
+if (! function_exists('get_php_path')) {
     function get_php_path(): ?string
     {
         return PHP_BINARY;
     }
 }
 
-if (!function_exists('formatIDR')) {
+if (! function_exists('get_php_with_artisan')) {
+    function get_php_with_artisan(): ?string
+    {
+        $php = env('PHP_CLI_PATH', PHP_BINARY);
+        if (empty($php) == true) {
+            $php = trim(shell_exec('which php'));
+        }
+
+        return $php;
+    }
+}
+
+if (! function_exists('formatIDR')) {
     function formatIDR($number)
     {
         $number = (float) $number;
+
         return Number::format($number, 0, locale: 'id-ID');
     }
 }

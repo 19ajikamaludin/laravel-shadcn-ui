@@ -9,9 +9,7 @@ export default function AppLogo() {
     return (
         <>
             <div className="ml-1 grid flex-1">
-                <span className="text-left text-3xl mb-0.5 truncate leading-none font-bold tracking-widest">
-                    {app_name}
-                </span>
+                <span className="mb-0.5 truncate text-left text-3xl leading-none font-bold tracking-widest">{app_name}</span>
             </div>
         </>
     )

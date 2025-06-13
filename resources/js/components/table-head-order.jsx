@@ -9,15 +9,9 @@ const TableHeadOrder = ({ children, onClick, order, column, className }) => {
             <div>{children}</div>
             <div>
                 {order.column === column ? (
-                    <>
-                        {order.direction === 'desc' ? (
-                            <ChevronDown className="w-4 h-4" />
-                        ) : (
-                            <ChevronUp className="w-4 h-4" />
-                        )}
-                    </>
+                    <>{order.direction === 'desc' ? <ChevronDown className="h-4 w-4" /> : <ChevronUp className="h-4 w-4" />}</>
                 ) : (
-                    <ChevronsUpDown className="w-4 h-4" />
+                    <ChevronsUpDown className="h-4 w-4" />
                 )}
             </div>
         </div>

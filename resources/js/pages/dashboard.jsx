@@ -1,11 +1,6 @@
-import { Head, router } from '@inertiajs/react'
+import { Head } from '@inertiajs/react'
 
-import {
-    Card,
-    CardContent,
-    CardDescription,
-    CardHeader,
-} from '@/components/ui/card'
+import { Card, CardContent, CardDescription, CardHeader } from '@/components/ui/card'
 import AppLayout from '@/layouts/app-layout'
 import { formatIDR } from '@/lib/utils'
 
@@ -22,7 +17,7 @@ export default function Dashboard(props) {
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Dashboard" />
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-2 rounded-xl">
+            <div className="grid grid-cols-2 gap-2 rounded-xl md:grid-cols-4">
                 <Card>
                     <CardHeader>
                         <CardDescription>
@@ -30,9 +25,7 @@ export default function Dashboard(props) {
                         </CardDescription>
                     </CardHeader>
                     <CardContent>
-                        <div className="text-2xl font-bold">
-                            {formatIDR(user_count)}
-                        </div>
+                        <div className="text-2xl font-bold">{formatIDR(user_count)}</div>
                     </CardContent>
                 </Card>
                 <Card className="shadow">
@@ -42,9 +35,7 @@ export default function Dashboard(props) {
                         </CardDescription>
                     </CardHeader>
                     <CardContent>
-                        <div className="text-2xl font-bold">
-                            {formatIDR(role_count)}
-                        </div>
+                        <div className="text-2xl font-bold">{formatIDR(role_count)}</div>
                     </CardContent>
                 </Card>
             </div>

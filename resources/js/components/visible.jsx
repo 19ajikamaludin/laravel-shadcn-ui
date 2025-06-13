@@ -1,5 +1,11 @@
-export const Visible = ({ show, children }) => {
-    if (show) {
-        return children
+export const Visible = ({ show, fallback = null, children }) => {
+    if (show === true) {
+        try {
+            return <>{children}</>
+        } catch (error) {
+            return fallback
+        }
     }
+
+    return null
 }

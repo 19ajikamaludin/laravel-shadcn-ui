@@ -1,11 +1,9 @@
 import { useCallback, useEffect, useState } from 'react'
 
-const prefersDark = () =>
-    window.matchMedia('(prefers-color-scheme: dark)').matches
+const prefersDark = () => window.matchMedia('(prefers-color-scheme: dark)').matches
 
 const applyTheme = (appearance) => {
-    const isDark =
-        appearance === 'dark' || (appearance === 'system' && prefersDark())
+    const isDark = appearance === 'dark' || (appearance === 'system' && prefersDark())
 
     document.documentElement.classList.toggle('dark', isDark)
 }
@@ -39,8 +37,7 @@ export function useAppearance() {
         const savedAppearance = localStorage.getItem('appearance')
         updateAppearance(savedAppearance || 'dark')
 
-        return () =>
-            mediaQuery.removeEventListener('change', handleSystemThemeChange)
+        return () => mediaQuery.removeEventListener('change', handleSystemThemeChange)
     }, [updateAppearance])
 
     return { appearance, updateAppearance }

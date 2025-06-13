@@ -4,14 +4,7 @@ import { InputError } from '@/components/input-error'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 
-export function FormNumberInput({
-    name,
-    onChange,
-    value,
-    label,
-    className,
-    error,
-}) {
+export function FormNumberInput({ name, onChange, value, label, className, error }) {
     const errorClassName = error ? 'text-red-600' : ''
 
     return (
@@ -41,6 +34,7 @@ export function FormNumberInput({
                         },
                     })
                 }}
+                autoComplete="off"
             />
             <InputError message={error} />
         </div>

@@ -20,9 +20,7 @@ export const filterAllowedMenu = (user, item) => {
 
     // check match permission name
     if ('permission' in item) {
-        return user.role.permissions.find((p) => p.name === item.permission)
-            ? item
-            : null
+        return user.role.permissions.find((p) => p.name === item.permission) ? item : null
     }
 
     // check sub item match permission name
@@ -33,9 +31,7 @@ export const filterAllowedMenu = (user, item) => {
                 return item
             }
 
-            const exist = user.role.permissions.find(
-                (p) => p.name === item.permission
-            )
+            const exist = user.role.permissions.find((p) => p.name === item.permission)
             if (exist) {
                 return item
             }
@@ -44,9 +40,7 @@ export const filterAllowedMenu = (user, item) => {
 
         // make parent item open if any sub item is active
         if (items.length > 0) {
-            item.active = items.find((item) => item.active === true)
-                ? true
-                : false
+            item.active = items.find((item) => item.active === true) ? true : false
             item.items = items
             return item
         }

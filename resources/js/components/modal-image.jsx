@@ -1,10 +1,4 @@
-import { Button } from '@/components/ui/button'
-import {
-    Dialog,
-    DialogContent,
-    DialogHeader,
-    DialogTitle,
-} from '@/components/ui/dialog'
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog'
 import { useEffect, useState } from 'react'
 
 export const ModalImage = ({ modalState }) => {
@@ -38,8 +32,7 @@ export const ModalImage = ({ modalState }) => {
                         >
                             <img
                                 src={url}
-                                className="object-fill
-"
+                                className="object-fill"
                                 alt="gambar sedang di proses"
                             />
                         </a>

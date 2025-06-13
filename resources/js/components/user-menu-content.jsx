@@ -1,15 +1,10 @@
 import { Link } from '@inertiajs/react'
 import { LogOut, Settings } from 'lucide-react'
 
-import {
-    DropdownMenuGroup,
-    DropdownMenuItem,
-    DropdownMenuLabel,
-    DropdownMenuSeparator,
-} from '@/components/ui/dropdown-menu'
+import AppearanceTabs from '@/components/appearance-tabs'
+import { DropdownMenuGroup, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator } from '@/components/ui/dropdown-menu'
 import { UserInfo } from '@/components/user-info'
 import { useMobileNavigation } from '@/hooks/use-mobile-navigation'
-import AppearanceTabs from '@/components/appearance-tabs'
 
 export function UserMenuContent({ user }) {
     const cleanup = useMobileNavigation()

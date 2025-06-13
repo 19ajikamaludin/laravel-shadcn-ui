@@ -11,9 +11,16 @@ use Illuminate\Validation\Rules\File as FileRule;
 
 class FileController extends Controller
 {
-    const TYPES = [
-        'excel/csv' => 'text/csv,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-        'image' => 'image/jpg,image/jpeg,image/png',
+    const IMAGE = 'image';
+
+    const FILEMIMES = [
+        'excel/csv' => 'text/csv,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.oasis.opendocument.spreadsheet',
+        self::IMAGE => 'image/jpg,image/jpeg,image/png,image/webp',
+        'image_and_pdf' => 'image/jpeg,image/png,image/gif,image/webp,application/pdf',
+    ];
+
+    const MIMES = [
+        'excel/csv' => 'xls,xlsx,csv,ods',
     ];
 
     public function show(string $name)
@@ -23,7 +30,7 @@ class FileController extends Controller
 
         // file di spesific path
         if ($file != null) {
-            $path = Storage::disk('public')->path($file->dir . $name);
+            $path = Storage::disk('public')->path($file->dir.$name);
         }
 
         // file in default
@@ -50,13 +57,22 @@ class FileController extends Controller
             $rule[] = FileRule::types($filemimes);
         }
 
+        if ($request->mimes) {
+            $mimes = self::MIMES[$request->mimes];
+            $rule = [
+                'required',
+                'file',
+                'mimes:'.$mimes,
+            ];
+        }
+
         $request->validate([
-            'file' => $rule,
+            'file_binary' => $rule,
             'path' => 'nullable|string',
         ]);
 
-        $file = $request->file('file');
-        $dir = $request->input('dir', 'tmp') . '/';
+        $file = $request->file('file_binary');
+        $dir = $request->input('dir', 'tmp').'/';
 
         // the `/` its mean that in disk public it will store in root folder
         Storage::disk('public')->put($dir, $file);
@@ -75,6 +91,7 @@ class FileController extends Controller
             'name_original' => $uploaded->upload_name,
             'name' => $uploaded->hash_name,
             'url' => route('file.show', ['file' => $uploaded->hash_name]),
+            'size' => $uploaded->size,
         ]);
     }
 }

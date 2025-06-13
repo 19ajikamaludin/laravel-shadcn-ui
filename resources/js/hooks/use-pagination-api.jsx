@@ -1,25 +1,27 @@
 import axios from 'axios'
 import { useState } from 'react'
 
-export function usePaginationApi(auth, params, url = 'api.select.table') {
-    const [loading, setLoading] = useState(false)
-    const [data, setData] = useState({
-        data: [],
-        links: [],
-        from: 0,
-        to: 0,
-        total: 0,
-        current_page: 1,
-    })
+export const paginationDefaultState = {
+    data: [],
+    links: [],
+    from: 0,
+    to: 0,
+    total: 0,
+    current_page: 1,
+}
 
-    const fetch = (page = 1, additionalParams) => {
+export function usePaginationApi(auth, params, url = 'api.select.table', defaultState = paginationDefaultState) {
+    const [loading, setLoading] = useState(false)
+    const [data, setData] = useState(defaultState)
+
+    const fetch = (page = 1, chage_params) => {
         setLoading(true)
         axios
             .get(
                 route(url, {
-                    page: page,
                     ...params,
-                    ...additionalParams,
+                    ...chage_params,
+                    page: page,
                 }),
                 {
                     headers: {
@@ -32,7 +34,7 @@ export function usePaginationApi(auth, params, url = 'api.select.table') {
             .then((res) => {
                 setData(res.data)
             })
-            .catch((err) => console.log(err))
+            .catch((err) => console.log(['pagination-api-err', err]))
             .finally(() => setLoading(false))
     }
 

@@ -1,10 +1,4 @@
-import {
-    Card,
-    CardContent,
-    CardDescription,
-    CardHeader,
-    CardTitle,
-} from '@/components/ui/card'
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 
 export default function AuthCardLayout({ children, title, description }) {
     return (
@@ -13,14 +7,10 @@ export default function AuthCardLayout({ children, title, description }) {
                 <div className="flex flex-col gap-6">
                     <Card className="rounded-xl">
                         <CardHeader className="px-10 pt-8 pb-0 text-center">
-                            <CardTitle className="text-6xl font-bold tracking-widest">
-                                {title}
-                            </CardTitle>
+                            <CardTitle className="text-6xl font-bold tracking-widest">{title}</CardTitle>
                             <CardDescription>{description}</CardDescription>
                         </CardHeader>
-                        <CardContent className="px-10 py-8">
-                            {children}
-                        </CardContent>
+                        <CardContent className="px-10 py-8">{children}</CardContent>
                     </Card>
                 </div>
             </div>

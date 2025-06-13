@@ -1,16 +1,10 @@
-import { Label } from '@/components/ui/label'
 import { InputError } from '@/components/input-error'
+import { Label } from '@/components/ui/label'
 
-import {
-    Select as BaseSelect,
-    SelectContent,
-    SelectItem,
-    SelectTrigger,
-    SelectValue,
-} from '@/components/ui/select'
 import { Button } from '@/components/button'
-import { X } from 'lucide-react'
+import { Select as BaseSelect, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { isEmpty } from 'lodash'
+import { X } from 'lucide-react'
 
 export const Option = ({ value, children }) => {
     return <SelectItem value={value}>{children}</SelectItem>
@@ -35,15 +29,7 @@ export const Option = ({ value, children }) => {
  *     ))}
  * </Select>
  */
-export const Select = ({
-    label,
-    placeholder,
-    value,
-    onChange = () => {},
-    error,
-    children,
-    onRemove,
-}) => {
+export const Select = ({ label, placeholder, value, onChange = () => {}, error, children, onRemove }) => {
     const showRemove = typeof onRemove === 'function' && !isEmpty(value)
 
     const className = error ? 'text-red-600' : ''
@@ -96,16 +82,7 @@ export const Select = ({
  *   onChange={(option) => onChange(option)}
  * />
  */
-export const SelectArray = ({
-    label,
-    placeholder,
-    value,
-    onChange = () => {},
-    error,
-    name,
-    onRemove,
-    options = [],
-}) => {
+export const SelectArray = ({ label, placeholder, value, onChange = () => {}, error, name, onRemove, options = [] }) => {
     return (
         <Select
             label={label}
@@ -143,16 +120,7 @@ export const SelectArray = ({
  *   onChange={(option) => onChange(option)}
  * />
  */
-export const SelectObject = ({
-    label,
-    placeholder,
-    value,
-    onChange = () => {},
-    error,
-    name,
-    onRemove,
-    options = {},
-}) => {
+export const SelectObject = ({ label, placeholder, value, onChange = () => {}, error, name, onRemove, options = {} }) => {
     return (
         <Select
             label={label}

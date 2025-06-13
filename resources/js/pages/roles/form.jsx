@@ -7,7 +7,6 @@ import { Card, CardContent } from '@/components/ui/card'
 import { Checkbox } from '@/components/ui/checkbox'
 import { Label } from '@/components/ui/label'
 import AppLayout from '@/layouts/app-layout'
-import { check } from 'prettier'
 
 const breadcrumbs = [
     {
@@ -38,13 +37,10 @@ export default function Role(props) {
                     group,
                     items.map((item) => ({
                         ...item,
-                        checked:
-                            g === group && item.name === n
-                                ? !item.checked
-                                : item.checked,
+                        checked: g === group && item.name === n ? !item.checked : item.checked,
                     })),
-                ])
-            )
+                ]),
+            ),
         )
     }
 
@@ -57,8 +53,8 @@ export default function Role(props) {
                         ...item,
                         checked: checked,
                     })),
-                ])
-            )
+                ]),
+            ),
         )
     }
 
@@ -71,8 +67,8 @@ export default function Role(props) {
                         ...item,
                         checked: g === group ? checked : item.checked,
                     })),
-                ])
-            )
+                ]),
+            ),
         )
     }
 
@@ -111,14 +107,11 @@ export default function Role(props) {
                         items.map((item) => {
                             return {
                                 ...item,
-                                checked:
-                                    role.permissions.find(
-                                        (permit) => permit.name === item.name
-                                    ) !== undefined,
+                                checked: role.permissions.find((permit) => permit.name === item.name) !== undefined,
                             }
                         }),
-                    ])
-                )
+                    ]),
+                ),
             )
         }
     }, [role])
@@ -153,9 +146,7 @@ export default function Role(props) {
                                         <div className="flex items-center space-x-3">
                                             <Checkbox
                                                 id={`check-${group}`}
-                                                onCheckedChange={(e) =>
-                                                    handleCheckGroup(group, e)
-                                                }
+                                                onCheckedChange={(e) => handleCheckGroup(group, e)}
                                             />
                                             <Label
                                                 htmlFor={`check-${group}`}
@@ -166,9 +157,7 @@ export default function Role(props) {
                                         </div>
                                         <div
                                             className={`grid grid-cols-1 gap-2 md:grid-cols-4 ${
-                                                errors.permissions
-                                                    ? 'border-red-600'
-                                                    : 'border-gray-400 dark:border-gray-700'
+                                                errors.permissions ? 'border-red-600' : 'border-gray-400 dark:border-gray-700'
                                             }`}
                                         >
                                             {permins[group].map((item) => (
@@ -179,12 +168,7 @@ export default function Role(props) {
                                                     <Checkbox
                                                         id={item.label}
                                                         checked={item.checked}
-                                                        onCheckedChange={() =>
-                                                            handleCheckPermission(
-                                                                group,
-                                                                item.name
-                                                            )
-                                                        }
+                                                        onCheckedChange={() => handleCheckPermission(group, item.name)}
                                                     />
                                                     <Label
                                                         htmlFor={item.label}
@@ -209,9 +193,7 @@ export default function Role(props) {
                                         Save
                                     </Button>
                                     <Link href={route('roles.index')}>
-                                        <Button variant="secondary">
-                                            Back
-                                        </Button>
+                                        <Button variant="secondary">Back</Button>
                                     </Link>
                                 </div>
                             </div>

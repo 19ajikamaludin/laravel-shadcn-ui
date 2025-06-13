@@ -1,16 +1,12 @@
-import { useEffect, useState } from 'react'
-import { CalendarIcon } from 'lucide-react'
+import { CalendarIcon, Check } from 'lucide-react'
+import { useEffect, useRef, useState } from 'react'
 
-import { cn, converToDate, formatDate, formatStandartDate } from '@/lib/utils'
+import { InputError } from '@/components/input-error'
 import { Button } from '@/components/ui/button'
 import { Calendar } from '@/components/ui/calendar'
 import { Label } from '@/components/ui/label'
-import { InputError } from '@/components/input-error'
-import {
-    Popover,
-    PopoverContent,
-    PopoverTrigger,
-} from '@/components/ui/popover'
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
+import { cn, converToDate, formatStandartDate, getDateLastMonth } from '@/lib/utils'
 import { format } from 'date-fns'
 
 /**
@@ -25,15 +21,21 @@ import { format } from 'date-fns'
 const FormDateRangeInput = (props) => {
     const { label, error, value, onChange } = props
 
+    const componentRef = useRef(null)
+    const [show, setShow] = useState(false)
     const [selectedDate, setSelectedDate] = useState({ from: null, to: null })
+    const lastMonth = getDateLastMonth()
+
+    const handleSubmit = () => {
+        setShow(false)
+        onChange({
+            start_date: formatStandartDate(selectedDate.from),
+            end_date: formatStandartDate(selectedDate.to),
+        })
+    }
 
     const handleSelectedDate = (date) => {
-        if (date && typeof onChange === 'function') {
-            onChange({
-                start_date: formatStandartDate(date.from),
-                end_date: formatStandartDate(date.to),
-            })
-        }
+        setSelectedDate(date)
     }
 
     useEffect(() => {
@@ -44,14 +46,17 @@ const FormDateRangeInput = (props) => {
             })
         }
         if (value === null) {
-            setSelectedDate(null)
+            setSelectedDate({ from: null, to: null })
         }
     }, [value])
 
     const className = error ? 'text-red-600' : ''
 
     return (
-        <div className="grid gap-2">
+        <div
+            className="grid gap-2"
+            ref={componentRef}
+        >
             {label && (
                 <Label
                     htmlFor={label}
@@ -61,22 +66,21 @@ const FormDateRangeInput = (props) => {
                 </Label>
             )}
 
-            <Popover>
+            <Popover
+                open={show}
+                onOpenChange={setShow}
+            >
                 <PopoverTrigger asChild>
                     <Button
                         id={label}
                         variant={'ghost'}
-                        className={cn(
-                            'border justify-start text-left font-normal min-w-[231px]',
-                            !selectedDate && 'text-muted-foreground'
-                        )}
+                        className={cn('min-w-[231px] justify-start border text-left font-normal', !selectedDate && 'text-muted-foreground')}
                     >
                         <CalendarIcon />
                         {selectedDate?.from ? (
                             selectedDate.to ? (
                                 <>
-                                    {format(selectedDate.from, 'dd/MM/yyyy')} -{' '}
-                                    {format(selectedDate.to, 'dd/MM/yyyy')}
+                                    {format(selectedDate.from, 'dd/MM/yyyy')} - {format(selectedDate.to, 'dd/MM/yyyy')}
                                 </>
                             ) : (
                                 format(selectedDate.from, 'dd/MM/yyyy')
@@ -91,12 +95,22 @@ const FormDateRangeInput = (props) => {
                     align="start"
                 >
                     <Calendar
+                        initialFocus
                         mode="range"
-                        defaultMonth={selectedDate?.from}
+                        defaultMonth={selectedDate?.from ?? lastMonth}
                         selected={selectedDate}
                         onSelect={handleSelectedDate}
                         numberOfMonths={2}
                     />
+                    <div className="flex w-full flex-row justify-end px-3 pb-3">
+                        <Button
+                            variant="outline"
+                            onClick={handleSubmit}
+                        >
+                            <Check />
+                            <span>Ok</span>
+                        </Button>
+                    </div>
                 </PopoverContent>
             </Popover>
 

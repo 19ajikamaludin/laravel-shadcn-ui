@@ -1,7 +1,7 @@
 import { usePage } from '@inertiajs/react'
 import axios from 'axios'
 import { isEmpty } from 'lodash'
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { toast } from 'sonner'
 
 import { InputError } from '@/components/input-error'
@@ -22,20 +22,12 @@ import { Download } from 'lucide-react'
  *    onChange={(file_path) => setData('app_logo', file_path)}
  *    error={errors.app_logo}
  *    url={app_logo_url}
- *    filemimes="image/jpg,image/jpeg,image/png"
+ *    filemimes="image"
+ *    dir="tmp"
  * />
  *
  */
-export function FormFile({
-    label,
-    onChange,
-    error,
-    preview,
-    help,
-    url,
-    filemimes = '',
-    dir = null,
-}) {
+export function FormFile({ label, onChange, error, preview, help, url, filemimes = '', mimes = '', dir = null, compress = false }) {
     const {
         props: { auth },
     } = usePage()
@@ -44,7 +36,7 @@ export function FormFile({
     const className = error ? 'text-red-600' : ''
 
     const [name, setName] = useState('No file chosen')
-    const [link, setLink] = useState(url)
+    const [link, setLink] = useState(null)
     const [loading, setLoading] = useState(false)
     const [percent, setPercent] = useState(0)
 
@@ -57,7 +49,7 @@ export function FormFile({
 
     const handleOnChange = (e) => {
         if (isEmpty(e.target.files)) {
-            console.log('target file empty')
+            console.log(['FormFile', 'target file empty'])
             return
         }
 
@@ -65,8 +57,10 @@ export function FormFile({
 
         const formData = new FormData()
         formData.append('filemimes', filemimes)
-        formData.append('file', e.target.files[0])
+        formData.append('mimes', mimes)
+        formData.append('file_binary', e.target.files[0])
         formData.append('dir', dir)
+        formData.append('compress', compress)
 
         axios
             .post(route('api.file.store'), formData, {
@@ -75,11 +69,7 @@ export function FormFile({
                     Authorization: auth.jwt_prefix + auth.jwt_token,
                 },
                 onUploadProgress: function (progressEvent) {
-                    setPercent(
-                        Math.round(
-                            (progressEvent.loaded * 100) / progressEvent.total
-                        )
-                    )
+                    setPercent(Math.round((progressEvent.loaded * 100) / progressEvent.total))
                 },
             })
             .then((response) => {
@@ -92,8 +82,15 @@ export function FormFile({
             })
             .finally(() => {
                 setLoading(false)
+                if (inputRef.current) {
+                    inputRef.current.value = ''
+                }
             })
     }
+
+    useEffect(() => {
+        setLink(url)
+    }, [url])
 
     return (
         <div className="grid w-full gap-2">
@@ -107,14 +104,16 @@ export function FormFile({
             )}
             {preview && preview}
 
-            <div
-                onClick={handleClick}
-                className="flex w-full items-center"
-            >
-                <Button className="rounded-r-none">
+            <div className="flex w-full items-center">
+                <Button
+                    onClick={handleClick}
+                    className="rounded-r-none"
+                    variant="outline"
+                >
                     {loading ? <Spinner /> : ' Choose File'}
                 </Button>
                 <Input
+                    onClick={handleClick}
                     type="text"
                     id={label}
                     value={`${loading ? `${percent}% Uploading . . .` : name}`}
@@ -123,7 +122,7 @@ export function FormFile({
                 />
                 {link && (
                     <a
-                        className="text-xs underline ml-2"
+                        className="ml-2 text-xs underline"
                         href={link}
                         target="_blank"
                         title="Download"

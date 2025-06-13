@@ -32,7 +32,7 @@ export default function ({ status }) {
                 <ArrowLeft />
                 Kembali
             </Link>
-            <div className="border-l-2 pl-2 border-red-400">
+            <div className="border-l-2 border-red-400 pl-2">
                 <h1>{title}</h1>
                 <div>{description}</div>
             </div>

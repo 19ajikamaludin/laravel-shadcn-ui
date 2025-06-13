@@ -45,9 +45,7 @@ export default function Index({ settings }) {
             <div>
                 <Card>
                     <CardContent>
-                        <div className="text-base-content mb-4 text-xl font-bold">
-                            Setting
-                        </div>
+                        <div className="text-base-content mb-4 text-xl font-bold">Setting</div>
                         <div className="space-y-6">
                             <TextInput
                                 name="app_name"
@@ -59,9 +57,7 @@ export default function Index({ settings }) {
 
                             <FormFile
                                 label={'App Logo'}
-                                onChange={(file_path) =>
-                                    setData('app_logo', file_path)
-                                }
+                                onChange={(file_path) => setData('app_logo', file_path)}
                                 error={errors.app_logo}
                                 filemimes="image/jpg,image/jpeg,image/png"
                             />

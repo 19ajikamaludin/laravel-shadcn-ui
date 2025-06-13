@@ -6,24 +6,16 @@ import { Button, Modal, ModalSelectInput, TextInput } from '@/components/index'
 
 export default function FormModal(props) {
     const { modalState } = props
-    const { data, setData, post, put, processing, errors, reset, clearErrors } =
-        useForm({
-            name: '',
-            email: '',
-            password: '',
-            role_id: null,
-            role: '',
-        })
+    const { data, setData, post, put, processing, errors, reset, clearErrors } = useForm({
+        name: '',
+        email: '',
+        password: '',
+        role_id: null,
+        role: '',
+    })
 
     const handleOnChange = (event) => {
-        setData(
-            event.target.name,
-            event.target.type === 'checkbox'
-                ? event.target.checked
-                    ? 1
-                    : 0
-                : event.target.value
-        )
+        setData(event.target.name, event.target.type === 'checkbox' ? (event.target.checked ? 1 : 0) : event.target.value)
     }
 
     const handleReset = () => {
@@ -105,9 +97,7 @@ export default function FormModal(props) {
                                     role_id: item ? item.id : null,
                                 })
                             }
-                            onRemove={() =>
-                                setData({ ...data, role: '', role_id: null })
-                            }
+                            onRemove={() => setData({ ...data, role: '', role_id: null })}
                             error={errors.role_id}
                             params={{
                                 table: 'roles',

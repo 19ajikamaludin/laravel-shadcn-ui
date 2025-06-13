@@ -1,10 +1,15 @@
 import { Link } from '@inertiajs/react'
 import {
     AudioWaveform,
+    Bike,
     BookOpen,
+    BookText,
     Bot,
+    Car,
     ChevronRight,
+    CircleDollarSignIcon,
     Command,
+    FileText,
     Frame,
     GalleryVerticalEnd,
     LayoutGrid,
@@ -12,23 +17,15 @@ import {
     PieChart,
     Plus,
     Settings2,
+    ShoppingCart,
     SquareTerminal,
     TableProperties,
     UsersRound,
-    BookText,
-    CircleDollarSignIcon,
-    Car,
-    Bike,
-    ShoppingCart,
-    FileText,
     Warehouse,
+    Wrench,
 } from 'lucide-react'
 
-import {
-    Collapsible,
-    CollapsibleContent,
-    CollapsibleTrigger,
-} from '@/components/ui/collapsible'
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible'
 import {
     SidebarGroup,
     SidebarGroupLabel,
@@ -63,6 +60,7 @@ const Icons = {
     ShoppingCart: ShoppingCart,
     FileText: FileText,
     Warehouse: Warehouse,
+    Wrench: Wrench,
 }
 
 export const ItemIcon = ({ icon, ...rest }) => {
@@ -95,9 +93,19 @@ const GroupMenu = ({ item }) => {
                                     asChild
                                     isActive={subItem.active}
                                 >
-                                    <Link href={subItem.route}>
-                                        <span>{subItem.title}</span>
-                                    </Link>
+                                    {'prefetch' in subItem ? (
+                                        <Link
+                                            href={subItem.route}
+                                            prefetch={['mount']}
+                                            cacheFor={item.prefetch}
+                                        >
+                                            <span>{subItem.title}</span>
+                                        </Link>
+                                    ) : (
+                                        <Link href={subItem.route}>
+                                            <span>{subItem.title}</span>
+                                        </Link>
+                                    )}
                                 </SidebarMenuSubButton>
                             </SidebarMenuSubItem>
                         ))}
@@ -115,10 +123,7 @@ const SingleMenu = ({ item }) => {
                 asChild
                 isActive={item.active}
             >
-                <Link
-                    href={item.route}
-                    prefetch
-                >
+                <Link href={item.route}>
                     {item.icon && <ItemIcon icon={item.icon} />}
                     <span>{item.title}</span>
                 </Link>

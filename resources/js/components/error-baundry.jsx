@@ -40,7 +40,7 @@ class ErrorBoundary extends Component {
                         <ArrowLeft />
                         Kembali
                     </div>
-                    <div className="border-l-2 pl-2 border-red-400">
+                    <div className="border-l-2 border-red-400 pl-2">
                         <h1>Something went wrong:</h1>
                         <pre>{this.state.error?.toString()}</pre>
                     </div>

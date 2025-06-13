@@ -14,8 +14,6 @@ class UserController extends Controller
     #[Permission('view-user')]
     public function index(Request $request): Response
     {
-        $request->user()->allow('view-user', true);
-
         $query = User::query()->with(['role']);
 
         if ($request->q) {

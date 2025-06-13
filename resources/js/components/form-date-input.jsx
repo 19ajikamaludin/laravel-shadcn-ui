@@ -1,16 +1,12 @@
-import { useEffect, useState } from 'react'
 import { CalendarIcon } from 'lucide-react'
+import { useEffect, useState } from 'react'
 
-import { cn, formatDate, formatStandartDate } from '@/lib/utils'
+import { InputError } from '@/components/input-error'
 import { Button } from '@/components/ui/button'
 import { Calendar } from '@/components/ui/calendar'
 import { Label } from '@/components/ui/label'
-import { InputError } from '@/components/input-error'
-import {
-    Popover,
-    PopoverContent,
-    PopoverTrigger,
-} from '@/components/ui/popover'
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
+import { cn, formatDate, formatStandartDate } from '@/lib/utils'
 
 /**
  * Example :
@@ -24,6 +20,8 @@ import {
 const FormDateInput = (props) => {
     const { label, error, value, onChange } = props // value always m/d/y
 
+    // create state for select_month focus
+    const [activeShowMonth, setActiveShowMonth] = useState(new Date())
     const [selectedDate, setSelectedDate] = useState(null)
     const [show, setShow] = useState(false)
 
@@ -33,6 +31,7 @@ const FormDateInput = (props) => {
             onChange(formatStandartDate(date))
         }
         setSelectedDate(date)
+        setActiveShowMonth(date)
     }
 
     useEffect(() => {
@@ -44,7 +43,7 @@ const FormDateInput = (props) => {
     const className = error ? 'text-red-600' : ''
 
     return (
-        <div className="grid gap-2">
+        <div className="grid w-full gap-2">
             {label && (
                 <Label
                     htmlFor={label}
@@ -62,10 +61,7 @@ const FormDateInput = (props) => {
                     <Button
                         id={label}
                         variant={'ghost'}
-                        className={cn(
-                            'justify-start text-left font-normal border',
-                            !value && 'text-muted-foreground'
-                        )}
+                        className={cn('justify-start border text-left font-normal', !value && 'text-muted-foreground')}
                         onClick={() => {
                             setShow(!show)
                         }}
@@ -82,7 +78,8 @@ const FormDateInput = (props) => {
                         mode="single"
                         selected={selectedDate}
                         onSelect={handleSelectedDate}
-                        initialFocus
+                        month={activeShowMonth}
+                        onMonthChange={setActiveShowMonth}
                     />
                 </PopoverContent>
             </Popover>

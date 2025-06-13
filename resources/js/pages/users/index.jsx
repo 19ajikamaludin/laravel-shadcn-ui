@@ -3,28 +3,10 @@ import { EllipsisVertical, Pencil, Trash } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { usePrevious } from 'react-use'
 
-import {
-    Button,
-    HasPermission,
-    ModalConfirm,
-    Pagination,
-    SearchInput,
-} from '@/components/index'
+import { Button, HasPermission, ModalConfirm, Pagination, SearchInput } from '@/components/index'
 import { Card, CardContent } from '@/components/ui/card'
-import {
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuItem,
-    DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu'
-import {
-    Table,
-    TableBody,
-    TableCell,
-    TableHead,
-    TableHeader,
-    TableRow,
-} from '@/components/ui/table'
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
 import { useModal } from '@/hooks/use-modal'
 import AppLayout from '@/layouts/app-layout'
 
@@ -73,7 +55,7 @@ export default function Index(props) {
                 {
                     replace: true,
                     preserveState: true,
-                }
+                },
             )
         }
     }, [search])
@@ -88,15 +70,11 @@ export default function Index(props) {
                         <div className="space-y-6">
                             <div className="flex justify-between">
                                 <HasPermission p="create-user">
-                                    <Button onClick={() => toggleFormModal()}>
-                                        Tambah
-                                    </Button>
+                                    <Button onClick={() => toggleFormModal()}>Tambah</Button>
                                 </HasPermission>
                                 <div className="flex items-center">
                                     <SearchInput
-                                        onChange={(e) =>
-                                            setSearch(e.target.value)
-                                        }
+                                        onChange={(e) => setSearch(e.target.value)}
                                         value={search}
                                     />
                                 </div>
@@ -112,19 +90,11 @@ export default function Index(props) {
                                 <TableBody>
                                     {data.map((user) => (
                                         <TableRow key={user.id}>
-                                            <TableCell className="font-medium">
-                                                {user.name}
-                                            </TableCell>
-                                            <TableCell>
-                                                {user.role
-                                                    ? user.role.name
-                                                    : 'System'}
-                                            </TableCell>
+                                            <TableCell className="font-medium">{user.name}</TableCell>
+                                            <TableCell>{user.role ? user.role.name : 'System'}</TableCell>
                                             <TableCell className="text-right">
                                                 <DropdownMenu>
-                                                    <DropdownMenuTrigger
-                                                        asChild
-                                                    >
+                                                    <DropdownMenuTrigger asChild>
                                                         <Button
                                                             variant="outline"
                                                             size="icon"
@@ -134,40 +104,24 @@ export default function Index(props) {
                                                     </DropdownMenuTrigger>
                                                     <DropdownMenuContent>
                                                         <HasPermission p="update-user">
-                                                            <DropdownMenuItem
-                                                                asChild
-                                                            >
+                                                            <DropdownMenuItem asChild>
                                                                 <div
                                                                     className="flex space-x-2"
-                                                                    onClick={() =>
-                                                                        toggleFormModal(
-                                                                            user
-                                                                        )
-                                                                    }
+                                                                    onClick={() => toggleFormModal(user)}
                                                                 >
                                                                     <Pencil />
-                                                                    <span>
-                                                                        Edit
-                                                                    </span>
+                                                                    <span>Edit</span>
                                                                 </div>
                                                             </DropdownMenuItem>
                                                         </HasPermission>
                                                         <HasPermission p="delete-user">
-                                                            <DropdownMenuItem
-                                                                asChild
-                                                            >
+                                                            <DropdownMenuItem asChild>
                                                                 <div
                                                                     className="flex space-x-2"
-                                                                    onClick={() =>
-                                                                        handleDeleteClick(
-                                                                            user
-                                                                        )
-                                                                    }
+                                                                    onClick={() => handleDeleteClick(user)}
                                                                 >
                                                                     <Trash />
-                                                                    <span>
-                                                                        Delete
-                                                                    </span>
+                                                                    <span>Delete</span>
                                                                 </div>
                                                             </DropdownMenuItem>
                                                         </HasPermission>
