@@ -1,5 +1,5 @@
 import { clsx } from 'clsx'
-import { format } from 'date-fns'
+import { addDays, format, parseISO, startOfMonth, subMonths } from 'date-fns'
 import { toast } from 'sonner'
 import { twMerge } from 'tailwind-merge'
 
@@ -96,18 +96,15 @@ export const formatDate = (date) => {
     return format(date, 'dd/MM/yyyy')
 }
 
-export const formatStandartDate = (date) => {
-    if (isEmpty(date)) {
-        return ''
-    }
-    return format(date, 'yyyy-mm-dd')
+export const todayDate = () => {
+    return formatStandartDate(new Date())
 }
 
 export const formatDateTime = (date) => {
     if (isEmpty(date)) {
         return ''
     }
-    return format(date, 'DD/MM/YYYY HH:mm:ss')
+    return format(date, 'dd/MM/yyyy HH:mm:ss')
 }
 
 export const converToDate = (date) => {
@@ -117,6 +114,69 @@ export const converToDate = (date) => {
     return new Date(date)
 }
 
+export const getZonePrice = (prices, zone, column) => {
+    const price = prices.find((p) => p.zone_id === zone.id)
+    if (isEmpty(price) === true) {
+        return 0
+    }
+    return price[column]
+}
+
+/**
+ *
+ * @param {*} date
+ * @returns yyyy-MM-ddd
+ */
+export const formatStandartDate = (date) => {
+    if (isEmpty(date)) {
+        return ''
+    }
+    return format(date, 'yyyy-MM-dd')
+}
+
 export const getDateLastMonth = () => {
     return startOfMonth(subMonths(new Date(), 1))
+}
+
+export const standartDateAddDays = (date, days) => {
+    const parsedDate = parseISO(date)
+    const newDate = addDays(parsedDate, days)
+    const result = format(newDate, 'yyyy-MM-dd')
+
+    return result
+}
+
+export const extract_nasted_to_lists = (obj, indent = 0) => {
+    const lists = []
+    const styles = {
+        0: {
+            text: 'ml-0 font-bold',
+            color: 'bg-primary',
+        },
+        1: {
+            text: 'ml-4 font-semibold',
+            color: 'bg-sky-500',
+        },
+        2: {
+            text: 'ml-8',
+            color: 'bg-blue-500',
+        },
+    }
+    for (const key in obj) {
+        if (key === 'counter') continue
+
+        const current = obj[key]
+        if (current && typeof current === 'object' && 'counter' in current) {
+            lists.push({
+                name: key,
+                counter: current.counter,
+                indent: indent,
+                ...styles[indent],
+            })
+
+            lists.push(...extract_nasted_to_lists(current, indent + 1))
+        }
+    }
+
+    return lists
 }

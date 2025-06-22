@@ -2,14 +2,12 @@ import { Head, useForm } from '@inertiajs/react'
 
 import { Button, FormFile, TextInput } from '@/components/index'
 import { Card, CardContent } from '@/components/ui/card'
+import { route } from '@/hooks/use-route'
 import AppLayout from '@/layouts/app-layout'
 
 const extractValue = (set, key) => {
     const find = set.find((s) => s.key === key)
     if (find) {
-        if (find.type === 'image') {
-            return find?.url
-        }
         return find?.value
     }
     return ''
@@ -23,7 +21,6 @@ const breadcrumbs = [
 ]
 
 export default function Index({ settings }) {
-    // const app_logo_url = extractValue(settings, 'app_logo')
     const { data, setData, post, processing, errors } = useForm({
         app_name: extractValue(settings, 'app_name') ?? '',
         app_logo: '',

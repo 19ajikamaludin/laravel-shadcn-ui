@@ -6,6 +6,7 @@ import { Button, InputError, TextInput } from '@/components/index'
 import { Card, CardContent } from '@/components/ui/card'
 import { Checkbox } from '@/components/ui/checkbox'
 import { Label } from '@/components/ui/label'
+import { route } from '@/hooks/use-route'
 import AppLayout from '@/layouts/app-layout'
 
 const breadcrumbs = [

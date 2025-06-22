@@ -3,6 +3,7 @@ import { LoaderCircle } from 'lucide-react'
 
 import { LabelLink } from '@/components/label-link'
 import { Button } from '@/components/ui/button'
+import { route } from '@/hooks/use-route'
 import AuthLayout from '@/layouts/auth-layout'
 
 export default function VerifyEmail({ status }) {

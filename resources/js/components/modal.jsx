@@ -35,7 +35,7 @@ export const Modal = ({ modalState, title, onClose, size = 'md', children }) => 
                     <DialogTitle>{title}</DialogTitle>
                     <DialogDescription></DialogDescription>
                 </DialogHeader>
-                <ScrollArea className={`mx-3 max-h-[80vh] pr-2.5`}>{children}</ScrollArea>
+                <ScrollArea className={`mx-3 max-h-[90vh] pr-2.5`}>{children}</ScrollArea>
             </DialogContent>
         </Dialog>
     )

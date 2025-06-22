@@ -2,7 +2,7 @@ import { forwardRef } from 'react'
 
 import { InputError } from '@/components/input-error'
 import { Label } from '@/components/ui/label'
-import { Textarea } from '@/components/ui/textarea'
+import { cn } from '@/lib/utils'
 
 /**
  * Example :
@@ -15,7 +15,7 @@ import { Textarea } from '@/components/ui/textarea'
  *
  */
 const TextareaInput = forwardRef((props, ref) => {
-    const { label, error, icon, ...inputProps } = props
+    const { label, error, name, value, onChange, placeholder } = props
 
     const className = error ? 'text-red-600' : ''
 
@@ -30,9 +30,19 @@ const TextareaInput = forwardRef((props, ref) => {
                 </Label>
             )}
 
-            <Textarea
+            {/* this text area is from import { Textarea } from '@/components/ui/textarea' */}
+            <textarea
+                data-slot="textarea"
+                className={cn(
+                    'border-input placeholder:text-muted-foreground focus-visible:border-ring focus-visible:ring-ring/50 aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive flex field-sizing-content min-h-16 w-full rounded-md border bg-transparent px-3 py-2 text-base shadow-xs transition-[color,box-shadow] outline-none focus-visible:ring-[3px] disabled:cursor-not-allowed disabled:opacity-50 md:text-sm',
+                    className,
+                )}
+                name={name}
                 id={label}
-                {...inputProps}
+                ref={ref}
+                value={value ?? ''}
+                onChange={onChange}
+                placeholder={placeholder}
             />
 
             <InputError message={error} />

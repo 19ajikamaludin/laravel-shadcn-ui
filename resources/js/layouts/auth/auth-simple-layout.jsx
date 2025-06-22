@@ -1,4 +1,5 @@
 import AppLogoIcon from '@/components/app-logo-icon'
+import { route } from '@/hooks/use-route'
 import { Link } from '@inertiajs/react'
 
 export default function AuthSimpleLayout({ children, title, description }) {

@@ -53,9 +53,13 @@ password : password
 
 ## Deploy ( go to production )
 
+1. setup env .env APP_URL with valid url prod, APP_ENV to production
+
 ### method 1 - compile assets
 
 ```bash
+php artisan ziggy:generate
+
 npm run build
 ```
 
@@ -64,6 +68,8 @@ after build the assets you can manually compress you application to deploy on we
 ### method 2 - compress asset to ready upload
 
 ```bash
+php artisan ziggy:generate
+
 php artisan build
 ```
 
@@ -86,3 +92,9 @@ php artisan scaffold
 ```
 
 <!-- ![](screenshot_generator.gif?raw=true) -->
+
+### Shadcn UI components
+
+```
+npx shadcn@latest add accordion breadcrumb chart dialog label scroll-area sidebar textarea alert button checkbox dropdown-menu navigation-menu select skeleton toggle-group avatar calendar collapsible form pagination separator table toggle badge card context-menu input popover sheet tabs tooltip
+```

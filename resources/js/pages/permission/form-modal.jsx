@@ -3,6 +3,7 @@ import { isEmpty } from 'lodash'
 import { useEffect } from 'react'
 
 import { Button, Modal, TextInput } from '@/components/index'
+import { route } from '@/hooks/use-route'
 
 export default function FormModal(props) {
     const { modalState } = props
@@ -11,8 +12,9 @@ export default function FormModal(props) {
         label: '',
     })
 
-    const handleOnChange = (event) => {
-        setData(event.target.name, event.target.type === 'checkbox' ? (event.target.checked ? 1 : 0) : event.target.value)
+    const handleOnChange = (e) => {
+        const { name, type, checked, value } = e.target
+        setData(name, type === 'checkbox' ? (checked ? 1 : 0) : value)
     }
 
     const handleReset = () => {

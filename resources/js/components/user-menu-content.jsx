@@ -5,6 +5,7 @@ import AppearanceTabs from '@/components/appearance-tabs'
 import { DropdownMenuGroup, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator } from '@/components/ui/dropdown-menu'
 import { UserInfo } from '@/components/user-info'
 import { useMobileNavigation } from '@/hooks/use-mobile-navigation'
+import { route } from '@/hooks/use-route'
 
 export function UserMenuContent({ user }) {
     const cleanup = useMobileNavigation()
@@ -16,6 +17,7 @@ export function UserMenuContent({ user }) {
                     <UserInfo
                         user={user}
                         showEmail={true}
+                        showRole={false}
                     />
                 </div>
             </DropdownMenuLabel>
@@ -30,7 +32,6 @@ export function UserMenuContent({ user }) {
                         className="block w-full"
                         href={route('profile.edit')}
                         as="button"
-                        prefetch
                         onClick={cleanup}
                     >
                         <Settings className="mr-2" />

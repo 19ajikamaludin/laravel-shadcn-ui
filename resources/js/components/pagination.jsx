@@ -4,6 +4,7 @@ import qs from 'qs'
 
 import { Button } from '@/components/ui/button'
 import { Pagination as BasePagination, PaginationContent, PaginationItem } from '@/components/ui/pagination'
+import { route } from '@/hooks/use-route'
 import { SelectArray } from './select-option'
 
 const PageLink = ({ active, label, url, params }) => {

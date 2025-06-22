@@ -1,9 +1,11 @@
 import { ContextMenu, ContextMenuContent, ContextMenuItem, ContextMenuTrigger } from '@/components/ui/context-menu'
-import { cn, showToast } from '@/lib/utils'
+import { route } from '@/hooks/use-route'
+import { cn, isEmpty, showToast } from '@/lib/utils'
 import { usePage } from '@inertiajs/react'
 import axios from 'axios'
 import { Loader2, Upload } from 'lucide-react'
 import { useCallback, useRef, useState } from 'react'
+import { toast } from 'sonner'
 
 export function FileDropzone({ maxFiles = 20, onFilesAdded, className, dir = '/', mimes = '', filemimes = '', compress = false }) {
     const {
@@ -41,7 +43,11 @@ export function FileDropzone({ maxFiles = 20, onFilesAdded, className, dir = '/'
                 onFilesAdded(response.data)
             })
             .catch((error) => {
-                setError(error.response.data.message)
+                if (isEmpty(error.response?.data?.message) === false) {
+                    setError(error.response.data.message)
+                    return
+                }
+                toast.error(error.message || 'An error occurred while uploading the file.')
             })
             .finally(() => {
                 set_loading(false)

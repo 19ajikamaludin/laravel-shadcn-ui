@@ -1,10 +1,13 @@
 import { useEffect } from 'react'
 import { Toaster } from 'sonner'
 
+import { Alert, AlertDescription } from '@/components/ui/alert'
+import { Visible } from '@/components/visible'
 import { useAppearance } from '@/hooks/use-appearance'
 import AppLayoutTemplate from '@/layouts/app/app-sidebar-layout'
 import { showToast } from '@/lib/utils'
 import { usePage } from '@inertiajs/react'
+import { AlertCircle } from 'lucide-react'
 
 export default ({ children, breadcrumbs, ...props }) => {
     const {
@@ -33,6 +36,7 @@ export default ({ children, breadcrumbs, ...props }) => {
                     duration: 3000,
                     dismissible: true,
                 }}
+                position="top-right"
             />
         </AppLayoutTemplate>
     )

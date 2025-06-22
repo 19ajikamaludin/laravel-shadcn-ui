@@ -55,6 +55,9 @@ services:
       PMA_HOST: mariadb
       MYSQL_ROOT_PASSWORD: password
       UPLOAD_LIMIT: '2048M'
+    mem_limit: 512m
+    mem_reservation: 128M
+    cpus: 0.5
     networks:
       - template
 

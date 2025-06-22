@@ -10,13 +10,15 @@ export default defineConfig({
             ssr: 'resources/js/ssr.jsx',
             refresh: true,
         }),
-        react(),
+        react({ fastRefresh: false }),
         tailwindcss(),
     ],
     esbuild: {
+        sourcemap: false,
         jsx: 'automatic',
     },
     build: {
+        sourcemap: false, // no source maps
         rollupOptions: {
             output: {
                 manualChunks: {
@@ -27,5 +29,16 @@ export default defineConfig({
             },
         },
         chunkSizeWarningLimit: '579kB',
+    },
+    server: {
+        host: true,
+        port: 5173,
+        hmr: {
+            host: 'localhost', // or your Docker host IP
+        },
+        watch: {
+            usePolling: true,
+            interval: 1000, // increase polling interval to reduce CPU
+        },
     },
 })

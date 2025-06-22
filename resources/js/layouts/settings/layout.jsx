@@ -45,12 +45,7 @@ export default function SettingsLayout({ children }) {
                                     'bg-muted': currentPath === item.url,
                                 })}
                             >
-                                <Link
-                                    href={item.url}
-                                    prefetch
-                                >
-                                    {item.title}
-                                </Link>
+                                <Link href={item.url}>{item.title}</Link>
                             </Button>
                         ))}
                     </nav>

@@ -78,7 +78,7 @@ export const PaginationApi = ({ links: { links, data, per_page, from, to, total 
     const indexOfActive = links.findIndex((i) => i.active)
 
     return (
-        <div className={`flex w-full flex-col justify-start md:flex-row ${limit ? 'md:justify-between' : 'md:justify-center'}`}>
+        <div className={`flex w-full flex-col justify-start gap-1 md:flex-row ${limit ? 'md:justify-between' : 'md:justify-center'}`}>
             {from && to && total && limit && (
                 <div className="flex flex-col gap-2 md:flex-row md:items-center">
                     <div className="text-sm text-gray-500">

@@ -1,5 +1,6 @@
 import { usePage } from '@inertiajs/react'
 import axios from 'axios'
+import { route } from './use-route'
 
 export function useFetcher() {
     const {

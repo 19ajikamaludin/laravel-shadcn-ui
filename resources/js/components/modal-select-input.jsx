@@ -71,6 +71,13 @@ export function ModalSelectInput(props) {
 
     const showRemoveBtn = typeof onRemove === 'function' && !isEmpty(selected)
 
+    const handleToggle = () => {
+        if (isEmpty(data.data) === true) {
+            fetch(1)
+        }
+        selectModal.toggle()
+    }
+
     const handleItemSelected = (item) => {
         onChange(item)
         selectModal.toggle()
@@ -102,15 +109,17 @@ export function ModalSelectInput(props) {
 
     // in state isOpen change
     useEffect(() => {
-        if (selectModal.isOpen) {
+        if (selectModal.isOpen === true) {
             fetch(1)
         }
     }, [])
 
     // in searching
     useEffect(() => {
-        fetch(1, { q })
-    }, [q])
+        if (selectModal.isOpen === true) {
+            fetch(1, { q })
+        }
+    }, [q, params])
 
     useEffect(() => {
         if (isEmpty(value) === false) {
@@ -149,7 +158,7 @@ export function ModalSelectInput(props) {
                     <Input
                         id={label}
                         value={selected}
-                        onClick={readOnly ? null : selectModal.toggle}
+                        onClick={readOnly ? null : () => handleToggle()}
                         placeholder={placeholder}
                         readOnly={true}
                     />

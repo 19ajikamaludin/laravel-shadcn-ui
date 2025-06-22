@@ -3,6 +3,7 @@ import { Head, Link, useForm, usePage } from '@inertiajs/react'
 
 import { Button } from '@/components/button'
 import { TextInput } from '@/components/text-input'
+import { route } from '@/hooks/use-route'
 import AppLayout from '@/layouts/app-layout'
 import SettingsLayout from '@/layouts/settings/layout'
 

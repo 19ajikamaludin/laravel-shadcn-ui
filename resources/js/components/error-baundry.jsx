@@ -1,3 +1,4 @@
+import { route } from '@/hooks/use-route'
 import { router } from '@inertiajs/react'
 import { ArrowLeft } from 'lucide-react'
 import { Component } from 'react'

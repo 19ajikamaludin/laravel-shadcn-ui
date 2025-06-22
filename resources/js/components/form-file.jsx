@@ -9,6 +9,7 @@ import { Spinner } from '@/components/spinner'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
+import { route } from '@/hooks/use-route'
 import { Download } from 'lucide-react'
 
 /**
@@ -78,7 +79,11 @@ export function FormFile({ label, onChange, error, preview, help, url, filemimes
                 setName(response.data.name_original)
             })
             .catch((error) => {
-                toast.error(error.response.data.message)
+                if (isEmpty(error.response?.data?.message) === false) {
+                    toast.error(error.response.data.message || error.response.statusText)
+                    return
+                }
+                toast.error(error.message || 'An error occurred while uploading the file.')
             })
             .finally(() => {
                 setLoading(false)

@@ -5,9 +5,17 @@ import { Button } from '@/components/button'
 import { Select as BaseSelect, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { isEmpty } from 'lodash'
 import { X } from 'lucide-react'
+import { Fragment } from 'react'
 
-export const Option = ({ value, children }) => {
-    return <SelectItem value={value}>{children}</SelectItem>
+export const Option = ({ value, children, key }) => {
+    return (
+        <SelectItem
+            value={value}
+            key={key}
+        >
+            {children}
+        </SelectItem>
+    )
 }
 
 /**
@@ -93,14 +101,10 @@ export const SelectArray = ({ label, placeholder, value, onChange = () => {}, er
             placeholder={placeholder}
             onRemove={onRemove}
         >
-            {/* <Option value={''}></Option> */}
             {options.map((option) => (
-                <Option
-                    value={option}
-                    key={option}
-                >
-                    {option}
-                </Option>
+                <Fragment key={option}>
+                    <Option value={option}>{option}</Option>
+                </Fragment>
             ))}
         </Select>
     )
@@ -132,12 +136,9 @@ export const SelectObject = ({ label, placeholder, value, onChange = () => {}, e
             onRemove={onRemove}
         >
             {Object.keys(options).map((option) => (
-                <Option
-                    value={option}
-                    key={option}
-                >
-                    {options[option]}
-                </Option>
+                <Fragment key={option}>
+                    <Option value={option}>{options[option]}</Option>
+                </Fragment>
             ))}
         </Select>
     )
