@@ -27,6 +27,7 @@ use php server
 ```bash
 php artisan migrate --seed # create table for db and seed data
 php artisan key:gen
+php artisan ziggy:generate # generate route file for frontend
 php artisan ser #keep run to dev
 ```
 
