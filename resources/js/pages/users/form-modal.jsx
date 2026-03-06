@@ -5,7 +5,6 @@ import { useEffect } from 'react'
 import { Button, Modal, ModalSelectInput, TextInput } from '@/components/index'
 import { route } from '@/hooks/use-route'
 
-
 export default function FormModal(props) {
     const { modalState } = props
     const { data, setData, post, put, processing, errors, reset, clearErrors } = useForm({

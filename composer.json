@@ -13,25 +13,25 @@
         "barryvdh/laravel-dompdf": "^3.1.1",
         "dyrynda/laravel-cascade-soft-deletes": "^4.5.0",
         "firebase/php-jwt": "^6.11.1",
-        "inertiajs/inertia-laravel": "^2.0.4",
-        "laravel/framework": "^12.21.0",
-        "laravel/prompts": "^0.3.6",
-        "laravel/tinker": "^2.10.1",
-        "spatie/async": "^1.7.0",
-        "symfony/process": "^7.3.0",
-        "tightenco/ziggy": "^2.5.3"
+        "inertiajs/inertia-laravel": "^2.0.21",
+        "laravel/framework": "^12.53.0",
+        "laravel/prompts": "^0.3.13",
+        "laravel/tinker": "^2.11.1",
+        "spatie/async": "^1.8.2",
+        "symfony/process": "^7.4.5",
+        "tightenco/ziggy": "^2.6.2"
     },
     "comments": {
         "rap2hpoutre/fast-excel": "^5.6"
     },
     "require-dev": {
         "fakerphp/faker": "^1.24.1",
-        "laravel/pail": "^1.2.3",
-        "laravel/pint": "^1.24.0",
-        "laravel/sail": "^1.44.0",
+        "laravel/pail": "^1.2.6",
+        "laravel/pint": "^1.27.1",
+        "laravel/sail": "^1.53.0",
         "mockery/mockery": "^1.6.12",
-        "nunomaduro/collision": "^8.8.2",
-        "pestphp/pest": "^3.8.2",
+        "nunomaduro/collision": "^8.9.1",
+        "pestphp/pest": "^3.8.5",
         "pestphp/pest-plugin-drift": "^3.0",
         "pestphp/pest-plugin-laravel": "^3.2"
     },

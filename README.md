@@ -97,5 +97,5 @@ php artisan scaffold
 ### Shadcn UI components
 
 ```
-npx shadcn@latest add accordion breadcrumb chart dialog label scroll-area sidebar textarea alert button checkbox dropdown-menu navigation-menu select skeleton toggle-group avatar calendar collapsible form pagination separator table toggle badge card context-menu input popover sheet tabs tooltip
+npx shadcn@latest add avatar calendar collapsible form pagination separator table toggle badge card context-menu input popover sheet tabs tooltip accordion breadcrumb chart dialog label scroll-area sidebar textarea alert button checkbox dropdown-menu navigation-menu select skeleton toggle-group
 ```

@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react'
 import { usePrevious } from 'react-use'
 
 import { Button, HasPermission, ModalConfirm, Pagination, SearchInput } from '@/components/index'
-import { Card, CardContent } from '@/components/ui/card'
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
 import { useModal } from '@/hooks/use-modal'
@@ -67,6 +67,10 @@ export default function Index(props) {
 
             <div>
                 <Card>
+                    <CardHeader>
+                        <CardTitle>Card Title</CardTitle>
+                        <CardDescription>Card Description</CardDescription>
+                    </CardHeader>
                     <CardContent>
                         <div className="space-y-6">
                             <div className="flex justify-between">
