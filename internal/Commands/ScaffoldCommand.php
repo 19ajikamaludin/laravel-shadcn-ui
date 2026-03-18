@@ -29,7 +29,7 @@ class ScaffoldCommand extends Command implements PromptsForMissingInput
     /**
      * Configure the command.
      */
-    protected function configure()
+    protected function configure(): void
     {
         $this->setAliases(['scaffold', 'gen', 'sc']);
 

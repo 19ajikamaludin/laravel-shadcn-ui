@@ -3,6 +3,10 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use Internal\Commands\BuildArchiveCommand;
+use Internal\Commands\PermissionCommand;
+use Internal\Commands\ScaffoldCommand;
+use Internal\Commands\SettingCommand;
 
 class InternalProvider extends ServiceProvider
 {
@@ -22,10 +26,10 @@ class InternalProvider extends ServiceProvider
         if (file_exists(base_path('internal/Commands'))) {
             $this->commands(
                 [
-                    \Internal\Commands\BuildArchiveCommand::class,
-                    \Internal\Commands\PermissionCommand::class,
-                    \Internal\Commands\ScaffoldCommand::class,
-                    \Internal\Commands\SettingCommand::class
+                    BuildArchiveCommand::class,
+                    PermissionCommand::class,
+                    ScaffoldCommand::class,
+                    SettingCommand::class,
                 ]
             );
         }

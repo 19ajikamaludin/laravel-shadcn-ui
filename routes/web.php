@@ -1,6 +1,5 @@
 <?php
 
-
 use App\Http\Controllers\Default\FileController;
 use App\Http\Controllers\Default\GeneralController;
 use App\Http\Controllers\Default\PermissionController;
@@ -45,5 +44,5 @@ Route::middleware(['auth', 'verified', PermissionVerification::class])->group(fu
 
 // #Generator Tag: Guest
 
-require __DIR__ . '/settings.php';
-require __DIR__ . '/auth.php';
+require __DIR__.'/settings.php';
+require __DIR__.'/auth.php';

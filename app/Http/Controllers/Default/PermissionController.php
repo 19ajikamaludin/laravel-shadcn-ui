@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Default;
 
-use App\Attributes\Permission as AttributesPermission;
 use App\Http\Controllers\Controller;
 use App\Models\Default\Permission;
 use Illuminate\Http\RedirectResponse;

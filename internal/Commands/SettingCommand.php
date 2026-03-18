@@ -23,7 +23,7 @@ class SettingCommand extends Command
     /**
      * Configure the command.
      */
-    protected function configure()
+    protected function configure(): void
     {
         $this->setAliases(['sync-setting', 'synst', 'st']);
 

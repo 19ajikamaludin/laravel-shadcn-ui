@@ -10,13 +10,13 @@
     "license": "MIT",
     "require": {
         "php": "^8.3",
-        "barryvdh/laravel-dompdf": "^3.1.1",
-        "dyrynda/laravel-cascade-soft-deletes": "^4.5.0",
-        "firebase/php-jwt": "^6.11.1",
+        "barryvdh/laravel-dompdf": "^3.1.2",
+        "dyrynda/laravel-cascade-soft-deletes": "dev-l13-compatibility",
+        "firebase/php-jwt": "^7.0.3",
         "inertiajs/inertia-laravel": "^3.0.0-beta",
-        "laravel/framework": "^12.53.0",
-        "laravel/prompts": "^0.3.13",
-        "laravel/tinker": "^2.11.1",
+        "laravel/framework": "^13.0",
+        "laravel/prompts": "^0.3.15",
+        "laravel/tinker": "^3.0",
         "spatie/async": "^1.8.2",
         "symfony/process": "^7.4.5",
         "tightenco/ziggy": "^2.6.2"
@@ -27,13 +27,13 @@
     "require-dev": {
         "fakerphp/faker": "^1.24.1",
         "laravel/pail": "^1.2.6",
-        "laravel/pint": "^1.27.1",
-        "laravel/sail": "^1.53.0",
+        "laravel/pint": "^1.29.0",
+        "laravel/sail": "^1.54.0",
         "mockery/mockery": "^1.6.12",
         "nunomaduro/collision": "^8.9.1",
-        "pestphp/pest": "^3.8.5",
-        "pestphp/pest-plugin-drift": "^3.0",
-        "pestphp/pest-plugin-laravel": "^3.2"
+        "pestphp/pest": "^4.4.2",
+        "pestphp/pest-plugin-drift": "^4.1",
+        "pestphp/pest-plugin-laravel": "^4.1"
     },
     "autoload": {
         "psr-4": {
@@ -77,6 +77,12 @@
             "dont-discover": []
         }
     },
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/laravel-shift/laravel-cascade-soft-deletes.git"
+        }
+    ],
     "config": {
         "optimize-autoloader": true,
         "preferred-install": "dist",

@@ -2,9 +2,6 @@
 
 namespace App\Constants;
 
-use App\Models\Default\User;
-use Illuminate\Support\Facades\Route;
-
 class MenuConstant
 {
     public static function all()
@@ -43,7 +40,6 @@ class MenuConstant
 
                 ],
             ],
-
 
             // # Add Generated Menu Here!
         ];

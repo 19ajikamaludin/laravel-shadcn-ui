@@ -5,7 +5,6 @@ namespace App\Models\Default;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 
 use App\Models\Traits\UserTrackable;
-use App\Models\Warehouse;
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -27,7 +26,7 @@ class User extends Authenticatable
         'role_id',
         'warehouse_id',
         'reset_token',
-        'type'
+        'type',
     ];
 
     /**

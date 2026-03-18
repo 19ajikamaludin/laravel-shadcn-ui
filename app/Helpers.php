@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Number;
+use Illuminate\Validation\ValidationException;
 
 if (! function_exists('splitPascalCase')) {
     function splitPascalCase($string)
@@ -98,7 +99,7 @@ if (! function_exists('numberToRoman')) {
 if (! function_exists('throw_validation_add_errors')) {
     function throw_validation_add_errors($errors)
     {
-        throw \Illuminate\Validation\ValidationException::withMessages($errors);
+        throw ValidationException::withMessages($errors);
     }
 }
 
